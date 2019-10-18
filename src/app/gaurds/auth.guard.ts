@@ -18,12 +18,12 @@ canActivate(): boolean {
 
 if(tkn&&role==='HR')
 {
-    this.routerNavigate.navigate(['hr/hrdashboard']);
+   
 return true;
 }
 else
 {
- // this.loc.back();  
+  this.loc.back();  
 return false;
 }
 }
