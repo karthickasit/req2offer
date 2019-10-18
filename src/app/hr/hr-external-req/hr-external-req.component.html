@@ -1,0 +1,230 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+<div>
+<h1> HR External Reqs</h1>
+</div>
+<ul class="app-breadcrumb breadcrumb">
+
+</ul>
+</div>
+
+<div class="jumbotron" *ngIf="!bool">
+  <h1 style="text-align: center">No External Reqs Raised</h1>
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf= "bool">
+    <table class="table table-condensed tile ">
+      <thead>
+        <tr>
+          <th>External Id</th>
+          <th>Raised By</th>
+          <th>Customer Name</th>
+          <th>Job Location</th>
+          <th>Skills</th>
+          <th>View</th>
+          <th>Status</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let item of external| paginate: { itemsPerPage: perPage, currentPage: currentpage, totalItems: totalitems } let i = index'>
+          <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#feedback"
+            (click)=feedback(item.external_id) title="feedback">{{item.external_id}}</a></td>
+          <td>{{item.employee_name}}</td>
+          <td>{{item.customer_name}}</td>
+          <td>{{item.job_location}}</td>
+          <td>{{item.skills}}</td>
+          <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)=view(item.external_id)>view</a></td>
+
+          <td *ngIf="item.status === 'Approved'">
+            <span class="approved">{{item.status}}</span>
+          </td>
+          <td *ngIf="item.status === 'Raised'">
+            <span class="raised">{{item.status}}</span>
+          </td>
+          <td *ngIf="item.status === 'Rejected'">
+            <span class="rejected">{{item.status}}</span>
+          </td>
+          <td *ngIf="item.status === 'Sentback'">
+            <span class="sentback">{{item.status}}</span>
+          </td>
+        <tr>
+        </tr>
+      </tbody>
+
+    </table>
+    <pagination-controls (pageChange)="pagechange($event)" class="pull-right"></pagination-controls>
+  </div>
+
+  <div id="myView" class="modal">
+      <div class="modal-dialog modal-newsletter">
+        <div class="modal-content">
+          <div class="modal-body text-left">
+
+            <div class="modal-header">
+              <h4 class="modal-title">External Req Info</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form>
+                <div style="margin: 25px">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label style="color: black; ">ExternalReq Id</label>
+                  <input id="external_id" [(ngModel)]="edit_external_id" name="edit_external_id" readonly
+                    class="form-control" required="true" type="number">
+                </div>
+                <div class="col-sm-6">
+                  <label style="color: black; ">Raised Employee Id</label>
+                  <input id="user_id" [(ngModel)]="edit_user_id" name="edit_user_id" readonly class="form-control"
+                    required="true" type="text" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Customer Name</label>
+                  <input type="text" readonly [(ngModel)]="edit_customer_Id" name="edit_customer_Id" required="required"
+                  class="form-control">
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Account Manager</label>
+                  <input type="text" readonly [(ngModel)]="edit_account_manager" name="edit_account_manager" required="required"
+                  class="form-control">
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Skill</label>
+                  <input readonly id="skill" [(ngModel)]="edit_skills" name="edit_skills" placeholder="skill"
+                    class="form-control" required="true" type="text">
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Years Of Experince</label>
+                  <input id="years_of_experince" [(ngModel)]="edit_years_of_experience" name="edit_years_of_experience"
+                    placeholder="years_of_experince" class="form-control" required="true" type="number" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Job Location</label>
+                  <input id="job_location" [(ngModel)]="edit_job_location" name="edit_job_location"
+                    placeholder="job_location" class="form-control" required="true" type="text" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Customer Approved CTC</label>
+                  <input id="edit_customer_offer_ctc" [(ngModel)]="edit_customer_approved_budget"
+                    name="edit_customer_approved_budget" placeholder="customer_approved_budget" class="form-control"
+                    required="true" type="number" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Expected CTC</label>
+                  <input id="expected_budget" [(ngModel)]="edit_expected_budget" name="edit_expected_budget"
+                    placeholder="expected_budget" class="form-control" required="true" type="number" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Margin</label>
+                  <input id="margin" [(ngModel)]="edit_margin" name="edit_margin" placeholder="Margin"
+                    class="form-control" required="true" type="number" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Expected Date Of Joining</label>
+                  <input id="date_of_joining" min="{{currentDate | date:'yyyy-MM-dd'}}"
+                    [(ngModel)]="edit_date_of_joining" name="edit_date_of_joining"
+                    placeholder="Expected_Date_Of_Joining" class="form-control" required="true" type="date" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label style="color: black; ">Notice period</label>
+                  <input id="notice_period period" min="{{currentDate | date:'yyyy-MM-dd'}}"
+                    [(ngModel)]="edit_notice_period" name="edit_notice_period" placeholder="Notice period"
+                    class="form-control" required="true" type="date" readonly>
+                </div>
+              </div>
+                </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div> 
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="feedback" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+  
+          <!-- Modal Header  -->
+          <div class="modal-header">
+            <h4 class="modal-title">Feedback</h4>
+  
+           
+          </div>
+  
+      <!-- Modal body -->
+     <div style="margin: 5px; " >
+  
+      <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+        <table class="table table-condensed tile " *ngIf = "f_data">
+          <thead>
+            <tr>
+             
+              <th>Message </th>
+              <th>Request Raised Date</th>
+              <th>Reviewed By </th>
+              <th> Reviewed Date</th>
+              <th>Role Name</th>
+              <th>Status</th>
+            
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of feedbacks" >
+           
+              <td>{{item.message}}</td>
+              <td>{{item.request_raised_date}}</td>
+              <td>{{item.reviewedBy}}</td>
+              <td>{{item.reviewedOn}}</td>
+              <td>{{item.role_name}}</td>
+      
+              <td *ngIf="item.status === 'Approved'">
+                <span class="approved">{{item.status}}</span>
+              </td>
+              <td *ngIf="item.status === 'Raised'">
+                  <span class="raised">{{item.status}}</span>
+                </td>
+                <td *ngIf="item.status === 'Rejected'">
+                  <span class="rejected">{{item.status}}</span>
+                  </td>
+                  <td *ngIf="item.status === 'Send Back'">
+                      <span class="sentback">{{item.status}}</span>
+                    </td>
+             
+         
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+      
+        <div class="container" *ngIf = "fd_data">
+            <div class="jumbotron">
+              <h3 class="text-center">No one responded on this req</h3>      
+              <!-- <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p> -->
+            </div>    
+          </div> 
+      
+       
+  
+      
+      
+       
+      </div>
+            </div>
+      <!-- Modal footer -->
+      <div class="row">
+        <div class="offset-md-3 col-md-4">
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary text-center" data-dismiss="modal"
+              (click)=erase() >close</button>
+        </div>
+        </div>
+      </div>
+      
+  </div>
+  </div>
+  </div>
+  

@@ -1,0 +1,215 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+  <div>
+    <h1> Confirmed Candidates</h1>
+  </div>
+   
+</div>
+
+<div class="jumbotron" *ngIf="!bool">
+  <h1 style="text-align: center">No Selected Candidates</h1>
+</div>
+
+<div class="row top table-responsive"style="margin-right: 0px; margin-left: 0px;" *ngIf = 'bool'>
+  <table class="table table-condensed tile " >
+    <thead>
+      <tr>
+         <th>Req Id</th>
+        <th>Candidate Name</th>
+        <th>Technology</th>
+        <th>Experience</th>
+        <th>Contact Number</th>
+        <th>Email</th>
+        <th> Date of Joining</th>
+        <th> Offer Validity Date</th>
+        <th>View</th> 
+      
+      
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of candidates| paginate: { itemsPerPage: 10, currentPage: p }; let i = index'>
+         <td>{{item.req_id}}</td>
+        <td>{{item.candidate_name}}</td>
+        <td>{{item.technology}}</td>
+        <td>{{item.experience}}</td>
+        <td>{{item.contact_number}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.date_of_joining}}</td>
+        <td>{{item.offer_validity_date}}</td>
+        
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)="candidateById(item.req_id,item.raised_by, item.employee_id)" >view</a></td>
+      
+      <tr>
+        </tr>
+    </tbody>
+    
+</table> 
+</div>
+<div class="pull-right"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+<div class="modal" id="myView" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Candidate Details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+     <div style="margin: 25px" >
+
+        <form #data="ngForm"  >
+          <div class="row">
+              <div class="col-sm-6"><div class="form-group">
+                  <label >Req Id: </label>
+                  <div  inputGroupContainer>
+                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                      <input id="fullName"  [(ngModel)]='req_id' name="req_id" placeholder="Enter Req ID" class="form-control" readonly required="true" value="" type="text"></div>
+                  </div>
+               </div></div>
+               <div class="col-sm-6"><div class="form-group">
+                  <label >Raised By:</label>
+                  <div  inputGroupContainer>
+                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                      <input id="fullName"  [(ngModel)]='raised_by' name="raised_by" placeholder="Enter Raised By" class="form-control" readonly required="true" value="" type="text"></div>
+                  </div>
+               </div></div>
+          </div>
+      <div class="row">
+          <div class="col-sm-6" offset="1"><div class="form-group">
+              <label>Candidate Name </label>
+              <div  inputGroupContainer>
+                 <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+                  <input [(ngModel)]='candidate_name' readonly placeholder="" class="form-control"  name="Enter Candidate Name" type="text"  ></div>
+              </div>
+         
+           </div></div>
+          <div class="col-sm-6"><div class="form-group">
+              <label >Candidate Type: </label>
+              <div  inputGroupContainer>
+                 <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input id="fullName"   [(ngModel)]='candidate_type' name="candidate_type " placeholder="Enter Candidate Type" readonly class="form-control" required="true" value="sai" type="text"></div>
+              </div>
+           </div></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"><div class="form-group">
+                <label >Contact Number: </label>
+                <div  inputGroupContainer>
+                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="fullName"  [(ngModel)]='contact_number' name="contact_number" placeholder="Enter Conttact Number" readonly class="form-control" required="true" value="" type="text"></div>
+                </div>
+             </div></div>
+            <div class="col-sm-6"><div class="form-group">
+                <label >Email ID: </label>
+                <div  inputGroupContainer>
+                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="fullName"  [(ngModel)]='email' name="email" placeholder="Enter Email Id" class="form-control" readonly required="true" value="" type="text"></div>
+                </div>
+             </div></div>
+          </div>
+          <div class="row">
+              <div class="col-sm-6"><div class="form-group">
+                  <label >Experience: </label>
+                  <div  inputGroupContainer>
+                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                      <input id="fullName"  [(ngModel)]='experience' name="experience" placeholder="Enter Experience" readonly class="form-control" required="true" value="" type="text"></div>
+                  </div>
+               </div></div>
+               <div class="col-sm-6"><div class="form-group">
+                  <label >Designation :</label>
+                  <div  inputGroupContainer>
+                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                      <input id="fullName"  [(ngModel)]='designation' name="designation" placeholder="Enter Designation" readonly class="form-control" required="true" value="" type="text"></div>
+                  </div>
+               </div></div>
+              
+            </div>
+              <div class="row">
+                  <div class="col-sm-6"><div class="form-group">
+                        <label >CTC: </label>
+                        <div  inputGroupContainer>
+                              <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                               <input id="fullName"  [(ngModel)]='ctc' name="ctc" placeholder="Enter Interviewer Name" readonly class="form-control" required="true" value="" type="number"></div>
+                           </div>
+                     </div></div>
+                  
+                  <div class="col-sm-6"><div class="form-group">
+                      <label >Confirmed Date: </label>
+                      <div  inputGroupContainer>
+                         <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                          <input type="date"  min="{{currentDate | date:'dd-MM-yyyy'}}" [(ngModel)]='confirmed_date' readonly name="confirmed_date" placeholder="Enter Inteview Date" class="form-control" required="true" value=""></div>
+                      </div>
+                      </div>
+                   </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-sm-6"><div class="form-group">
+                          <label >Date of Joining: </label>
+                          <div  inputGroupContainer>
+                             <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                              <input type="date"  min="{{currentDate | date:'dd-MM-yyyy'}}" [(ngModel)]='date_of_joining' readonly name="date_of_joining" placeholder="Enter Date of Joining" class="form-control" required="true" value=""></div>
+                          </div>
+                          </div>
+                       </div>
+                      
+                      <div class="col-sm-6"><div class="form-group">
+                          <label >Offer Validity Date: </label>
+                          <div  inputGroupContainer>
+                             <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                              <input type="date"  min="{{currentDate | date:'dd-MM-yyyy'}}" [(ngModel)]='offer_validity_date' readonly name="offer_validity_date" placeholder="Enter Offer Validity Date" class="form-control" required="true" value=""></div>
+                          </div>
+                          </div>
+                       </div>
+                      </div>
+              
+                
+              <div class="row">
+                  <div class="col-sm-6"><div class="form-group">
+                      <label >Job Location: </label>
+                      <div  inputGroupContainer>
+                         <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                          <input id="fullName"  [(ngModel)]='job_location' name="job_location" placeholder="Enter job_location" class="form-control" readonly required="true" value="" type="text"></div>
+                      </div>
+                   </div></div>
+                   <div class="col-sm-6"><div class="form-group">
+                    <label >Candidate Address :</label>
+                    <div  inputGroupContainer>
+                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="fullName"  [(ngModel)]='candidate_address' name="candidate_address" placeholder="Enter Candidate Address" readonly class="form-control" required="true" value="" type="text"></div>
+                    </div>
+                 </div></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                      <input type="radio" name="mailConfirmation" [(ngModel)]="mailConfirmation"  value="salaryBreak" (change)="confirmSendMail($event)">&nbsp;&nbsp;<a class="btn btn-secondary btn-sm" href='http://192.168.2.109:5007/salarybreakup?employee_id={{emp_id}}' target="_blank">Preview Salary Break Up</a>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="radio" name="mailConfirmation" [(ngModel)]="mailConfirmation" value="offerLetter" (change)="confirmSendMail($event)">&nbsp;&nbsp;<a class="btn btn-secondary btn-sm" href='http://192.168.2.109:5007/offerletter?employee_id={{emp_id}}' target="_blank" >Preview Offer Letter</a>
+                </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-check">
+                      <!-- <input type="checkbox" class="form-check-input" (change)="confirmSendMail($event)"> -->
+                      <label class="form-check-label" style="color:#bb0000;">* Please select radio button to as a mail.</label>
+                    </div>
+                  </div>
+                </div>
+                </form>
+            </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" [disabled]="!confirmMail" (click)="confirmEmail()"> Confirm</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal" >Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,236 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+  <div>
+    <h1> HR Internal Reqs</h1>
+  </div>
+
+</div>
+
+
+<div class="jumbotron" *ngIf="!bool">
+  <h1 style="text-align: center">No Internal Reqs Raised</h1>
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf = "bool">
+  <table class="table table-condensed tile ">
+    <thead>
+      <tr>
+       <th>Req Id</th>
+        <th>Raised By</th>
+        <th>Bu Name</th>
+        <th>Employee Type</th>
+        <th>Skills</th>
+        <th>Sbu Name</th>
+        <th>View</th>
+        <th>Status</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        *ngFor='let item of internal | paginate: { itemsPerPage: perPage, currentPage: currentpage, totalItems: totalitems } let i = index'>
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#feedback"
+          (click)=feedback(item.int_req_id) title="feedback">{{item.int_req_id}}</a></td>
+        <td>{{item.employee_name}}</td>
+        <td>{{item.bu_name}}</td>
+        <td>{{item.employee_type}}</td>
+        <td>{{item.sbu_name}}</td>
+        <td>{{item.skills}}</td>
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)=view(item.int_req_id)>view</a></td>
+        
+        <td *ngIf="item.status === 'Approved'">
+          <span class="approved">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Raised'">
+          <span class="raised">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Reject'">
+          <span class="rejected">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Sentback'">
+          <span class="sentback">{{item.status}}</span>
+        </td>
+
+        
+
+      <tr>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+<pagination-controls (pageChange)="pagechange($event)" class="pull-right"></pagination-controls>
+
+<div>
+    <form #editdata="ngForm">
+      <div class="modal" id="myView">
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <!-- Modal Header  -->
+            <div class="modal-header">
+              <h4 class="modal-title">Internal Req Info</h4>
+  
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div style="margin: 25px">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>Internal req id</label>
+                  <input id="user_id" [(ngModel)]="int_req_id" name="int_req_id" readonly class="form-control"
+                    required="true" type="text">
+                </div>
+                <div class="col-sm-6">
+                  <label>Raised by</label>
+                  <input id="user_id" [(ngModel)]="edit_employee_name" name="edit_employee_name" readonly class="form-control" required="true"
+                    type="text" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label>BU Name</label>
+                  <input type="text" [(ngModel)]="edit_business_unit" name="edit_business_unit" required="required"
+                  class="form-control" readonly >
+                </div>
+  
+                <div class="col-sm-6"><br>
+                  <label>SBU Name</label>
+                  <input type="text" [(ngModel)]="edit_sub_business_unit" name="edit_sub_business_unit" required="required"
+                  class="form-control" readonly >
+                </div>
+                <div class="col-sm-6"><br>
+                  <label>Employee Type</label>
+                  <input type="text" [(ngModel)]="edit_employee_type" name="edit_employee_type" required="required"
+                  class="form-control" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label>Cost Center </label>
+                  <input type="text" [(ngModel)]="edit_cost_center_id" name="edit_cost_center_id" required="required"
+                  class="form-control" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label>Skill</label>
+                  <input id="edit_skill" [(ngModel)]="edit_skill" name="edit_skill" placeholder="skill"
+                    class="form-control" required="true" type="text" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label>Budget</label>
+                  <input id="budget" [(ngModel)]="edit_budget" name="edit_budget" class="form-control" required="true"
+                    type="number" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label>Years Of Experince</label>
+                  <input id="yearsOfExperince" [(ngModel)]="edit_years_of_experience" name="edit_years_of_experience"
+                    class="form-control" required="true" type="number" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label for="expected_date_of_joining">Expected Date Of Joining</label>
+                  <input type="date" [(ngModel)]="edit_expected_doj" name="edit_expected_doj" value="{{expected_doj}}"
+                    class="form-control" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label for="notice_periods">Notice Period</label>
+                  <input type="date" [(ngModel)]="edit_notice_period" name="edit_notice_period" class="form-control" readonly>
+                </div>
+                <div class="col-sm-6"><br>
+                  <label for="status">Status</label>
+                  <input type="text" [(ngModel)]="status" name="status" class="form-control" readonly>
+                </div>
+              </div>
+            </div>
+  
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal">Close</button>
+              </div> 
+  
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal" id="feedback" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header  -->
+        <div class="modal-header">
+          <h4 class="modal-title">Feedback</h4>
+
+         
+        </div>
+
+    <!-- Modal body -->
+   <div style="margin: 5px; " >
+
+    <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+      <table class="table table-condensed tile " *ngIf = "f_data">
+        <thead>
+          <tr>
+           
+            <th>Message </th>
+            <th>Request Raised Date</th>
+            <th>Reviewed By </th>
+            <th> Reviewed Date</th>
+            <th>Role Name</th>
+            <th>Status</th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of feedbacks" >
+         
+            <td>{{item.message}}</td>
+            <td>{{item.request_raised_date}}</td>
+            <td>{{item.reviewedBy}}</td>
+            <td>{{item.reviewedOn}}</td>
+            <td>{{item.role_name}}</td>
+    
+            <td *ngIf="item.status === 'Approved'">
+              <span class="approved">{{item.status}}</span>
+            </td>
+            <td *ngIf="item.status === 'Raised'">
+                <span class="raised">{{item.status}}</span>
+              </td>
+              <td *ngIf="item.status === 'Rejected'">
+                <span class="rejected">{{item.status}}</span>
+                </td>
+                <td *ngIf="item.status === 'Send Back'">
+                    <span class="sentback">{{item.status}}</span>
+                  </td>
+           
+       
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+    
+      <div class="container" *ngIf = "fd_data">
+          <div class="jumbotron">
+            <h3 class="text-center">No one responded on this req</h3>      
+            <!-- <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p> -->
+          </div>    
+        </div> 
+    
+     
+
+    
+    
+     
+    </div>
+          </div>
+    <!-- Modal footer -->
+    <div class="row">
+      <div class="offset-md-3 col-md-4">
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary text-center" data-dismiss="modal"
+            (click)=erase() >close</button>
+      </div>
+      </div>
+    </div>
+    
+</div>
+</div>
+</div>

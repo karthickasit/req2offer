@@ -1,0 +1,158 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+  <p style="color: white;margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+
+<div class="app-title">
+  <div>
+    <h1>Selected Candidates List</h1>
+  </div>
+  
+</div>
+<!-- View Form -->
+<div id="myView" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">	
+      <form #editform="ngForm">						
+      <div class="modal-header">
+        <h4 class="modal-title">Selected Candidates List</h4>                                                                                                                                                                                                                     
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+      </div>
+      <div style="margin: 25px" >     
+        <div class="row">
+            <div class="col-sm-6">
+                <label >Req Id</label>
+                  <input [(ngModel)]="req_id" name="req_id" class="form-control" placeholder="req_id" readonly >
+                  <br>
+              </div>
+              <div class="col-sm-6">
+                <label >Employee Id</label>
+                <input [(ngModel)]="employee_id" name="employee_id" class="form-control" placeholder="employee_id" readonly>
+                <br>
+              </div>
+            
+
+          <div class="col-sm-6">
+            <label>Candidate Name</label>
+              <input [(ngModel)]="candidate_name" name="candidate_name" class="form-control" placeholder="candidate_name" readonly >
+              <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Candidate Type</label>
+            <input [(ngModel)]="candidate_type" name="candidate_type" class="form-control" placeholder="candidate_type" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Email</label>
+            <input [(ngModel)]="email" name="email" class="form-control" placeholder="email" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Contact Number</label>
+            <input [(ngModel)]="contact_number" name="contact_number" class="form-control" placeholder="contact_number" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Designation</label>
+            <input [(ngModel)]="designation" name="designation" class="form-control" placeholder="designation" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Experience</label>
+            <input [(ngModel)]="experience" name="experience" class="form-control" placeholder="experience" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label>Date Of Joining</label>
+            <input [(ngModel)]="date_of_joining" name="date_of_joining" class="form-control" placeholder="date_of_joining" readonly>
+            <br>
+          </div>    
+          <div class="col-sm-6">
+            <label>Confirmed Date</label>
+            <input [(ngModel)]="confirmed_date" name="confirmed_date" class="form-control" placeholder="confirmed_date" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Job Location</label>
+            <input [(ngModel)]="job_location" name="job_location" class="form-control" placeholder="job_location" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Offer Validity Date</label>
+            <input [(ngModel)]="offer_validity_date" name="offer_validity_date" class="form-control" placeholder="offer_validity_date" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Others</label>
+            <input [(ngModel)]="others" name="others" class="form-control" placeholder="others" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+              <label >Technology</label>
+              <input [(ngModel)]="technology" name="technology" class="form-control" placeholder="technology" readonly>
+              <br>
+            </div>
+          
+      </div>
+      
+      </div> 
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf = "!bool">
+  <div class="jumbotron">
+    <h3 class="text-center">No Candidate have been selected </h3>
+  </div>    
+</div> 
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf = "bool">
+  <table class="table table-condensed tile " >
+    <thead>
+      <tr>
+       
+        <th>Req Id</th>
+        <th>Employee Id</th>
+        <th>Candidate Name</th>
+        <th>Email</th>
+        <th>Contact Number</th>
+        <th>Designation</th>
+        <th>Experience</th>
+        <th>Date Of Joining</th>
+        <th>Confirmed Date</th>
+        <!-- <th>Candidate Type</th>
+        <th>Job Location</th>
+        <th>Offer Validity Date</th>
+        <th>Others</th>
+        <th>Technology</th> -->
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of selectedcandidates;let i = index '>
+         
+        <td>{{item.req_id}}</td>
+        <td>{{item.employee_id}}</td>
+        <td>{{item.candidate_name}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.contact_number}}</td>
+        <td>{{item.designation}}</td>
+        <td>{{item.experience}}</td>
+        <td>{{item.date_of_joining}}</td>
+        <td>{{item.confirmed_date}}</td>  
+        <!-- <td>{{item.candidate_type}}</td> 
+        <td>{{item.job_location}}</td>
+        <td>{{item.offer_validity_date}}</td>
+        <td>{{item.others}}</td>
+        <td>{{item.technology}}</td> -->
+       
+          <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)=view(item)>view</a>
+          
+      <tr>
+      </tr>
+    </tbody>    
+  </table> 
+  
+</div>
+    

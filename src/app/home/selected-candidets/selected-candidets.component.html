@@ -1,0 +1,140 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white; margin-top:40px;" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+    <div>
+      <h1>Confirmed Candidates</h1>
+    </div>
+  </div>
+
+  <div class="container" *ngIf = "!bool">
+    <div class="jumbotron">
+      <h3 class="text-center">No Candidate have been selected </h3>      
+    </div>    
+  </div> 
+
+
+  <div class="row top table-responsive"style="margin-right: 0px; margin-left: 0px;" *ngIf= 'bool'>
+    <table class="table table-condensed tile " >
+      <thead>
+        <tr>
+          <th>Req Id</th>
+          <th>Candidate Name</th>
+          <th>Technology</th>
+          <th>Experience</th>
+          <th>Contact Number</th>
+          <th>Email</th>
+          <th>Date of joining</th>
+          <th>Offer Validity Date</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let item of getCandidateList | paginate: { itemsPerPage: 10, currentPage: p }; let i = index'>
+          <td>{{item.req_id}}</td>
+          <td>{{item.candidate_name}}</td>
+          <td>{{item.technology}}</td>
+          <td>{{item.experience}}</td>
+          <td>{{item.contact_number}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.date_of_joining}}</td>
+          <td>{{item.offer_validity_date}}</td>          
+          <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)="candidateById(item.req_id, item.raised_by, item.employee_id)" >view</a></td>
+        
+        <tr>
+          </tr>
+      </tbody>
+      
+  </table> 
+  </div>
+  <div class="pull-right"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+  
+  <!-- View Candidate Details -->
+  <!-- The Modal -->
+  <div>
+    <form>
+    <div class="modal" id="myView" >
+    <div class="modal-dialog">
+    <div class="modal-content">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+    <h4 class="modal-title">View Selected Candidates</h4>
+    <div style="float:right">
+    </div>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    
+    
+    <div style="margin: 25px" >   
+    <div class="row">
+    <div class="col-sm-6">
+    <label >REQ Id</label>
+    <br>
+    <input type="text" [(ngModel)]="req_id" name="req_id"   required="required" placeholder="Enter Req_Id" class="form-control" readonly   >        
+    </div>
+    <div class="col-sm-6">
+    <label >Raised By</label>
+    <br>
+    <input type="text" [(ngModel)]="raisedBy" name="raisedBy"   required="required" placeholder="Enter Raised By" class="form-control" readonly   >        
+    
+    </div>
+    </div>
+    <br>
+    
+    
+    <div class="row">
+    
+    <div class="col-sm-6">
+    <label >Years Of Experince</label>
+    <input id="years_of_experience" [(ngModel)]="experience"  name="years_of_experience" placeholder="Enter Years of Experience"
+    class="form-control" required="true" readonly type="text">
+    </div>
+
+    <div class="col-sm-6">
+      <label >Technology</label>
+      <input id="technology"  [(ngModel)]="technology"  name="technology" placeholder="Enter Technology"
+      class="form-control" required="true" readonly type="text">
+      
+      </div>
+    </div>
+    
+    
+    <br>
+    <div class="row">
+     
+      
+      <div class="col-sm-6">
+        <label >Email</label>
+        <input id="email"  [(ngModel)]="email"  name="email" placeholder="Enter Email"
+        class="form-control" required="true" readonly type="text">
+        </div>
+        <div class="col-sm-6">
+          <label >Candidate Address</label>
+          <input id="our_ctc" name="candidate_address" placeholder="Enter Candidate Address"
+          class="form-control" required="true" readonly type="text" [(ngModel)]="candidate_address">
+          </div>
+      </div>
+  
+    <div class="row">
+    
+    <div class="col-sm-6">
+    <label >Contact Number:</label>
+    <input id="margin"  [(ngModel)]="contact_number" placeholder="Enter Contact Number" readonly name="contact_number" type="number"  class="form-control">
+    
+    </div>
+    </div> 
+    
+    
+    </div> 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-success" data-dismiss="modal">Close</button>
+         
+          <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" >close</button> -->
+          </div> 
+    </div>
+    </div>
+    </div>
+    </form>
+    </div>

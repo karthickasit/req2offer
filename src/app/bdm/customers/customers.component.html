@@ -1,0 +1,231 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+  <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+  <div>
+    <h1> Customers</h1>
+  </div>
+
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal" style="margin-right: 155ex; ">
+  Add Customer
+</button>
+<br><br>
+<div id="Modal" class="modal" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-newsletter">
+    <div class="modal-content">
+      <div class="modal-body text-left">
+          <div class="modal-header">
+              <h4 class="modal-title">Add Customer</h4>
+              <button type="button" class="close" (click)="clear(add.value);add.reset()" data-dismiss="modal">&times;</button>
+            </div>
+        <form #add="ngForm" (ngSubmit)="add_cust(add)">
+          <div class="row">
+            <!-- <div class="col-sm-6">
+              <label style="color: black;">Customer Id</label>
+              <input id="customer_id" [(ngModel)]="customer_id" name="customer_id" class="form-control" required="true"
+                type="number" placeholder="customer id" #cid1="ngModel"
+                [ngClass]="{'is-invalid':cid1.invalid && cid1.touched}" pattern="[0-9]">
+                <section *ngIf="cid1.invalid && cid1.touched" class="invalid-feedback">
+                <p *ngIf="cid1.errors.required">*please enter Customer Id</p>
+                </section> 
+            </div> -->
+            <div class="col-sm-6"><br>
+                <label style="color: black; ">Customer Name</label>
+                <input id="customer_name" [(ngModel)]="customer_name" name="customer_name" placeholder="Enter customer name"
+                  required class="form-control" required="true" type="text" #cname1="ngModel"
+                  [ngClass]="{'is-invalid':cname1.invalid && cname1.touched}" pattern="[^-\s][a-zA-Z\s]*">
+                  <section *ngIf="cname1.invalid && cname1.touched" class="invalid-feedback">
+                  <p *ngIf="cname1.errors.required">*please enter Customer Name</p>
+                  </section>
+              </div>
+              <div class="col-sm-6"><br>
+                  <label style="color: black;">Email Id</label>
+                  <input id="email_id" [(ngModel)]="email_id" name="email_id" required="required" class="form-control" required="true"
+                    type="text" placeholder="Enter email id" #email1="ngModel"
+                    [ngClass]="{'is-invalid':email1.invalid && email1.touched}" pattern= "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                  <section *ngIf="email1.invalid && email1.touched" class="invalid-feedback">
+                  <p *ngIf="email1.errors.required">*please enter Email</p>
+                  </section>
+              </div>
+              <div class="col-sm-6"><br>
+                  <label style="color: black;"> Job Location</label>
+                  <input id="location" [(ngModel)]="location" name="location" class="form-control" required="true"
+                    type="text" placeholder="Enter location" #jbloc1="ngModel"
+                    [ngClass]="{'is-invalid':jbloc1.invalid && jbloc1.touched}" pattern="[^-\s][a-zA-Z\s]*">
+                  <section *ngIf="jbloc1.invalid && jbloc1.touched" class="invalid-feedback">
+                  <p *ngIf="jbloc1.errors.required">*please enter Job Location</p>
+                  </section>
+              </div>
+              <div class="col-sm-6"><br>
+                  <label style="color: black;">Spoc</label>
+                  <input id="spoc" [(ngModel)]="spoc" name="spoc" class="form-control" required="true"
+                    type="text" placeholder="Enter spoc name" #spc1="ngModel"
+                    [ngClass]="{'is-invalid':spc1.invalid && spc1.touched}" pattern="[^-\s][a-zA-Z\s]*">
+                  <section *ngIf="spc1.invalid && spc1.touched" class="invalid-feedback">
+                  <p *ngIf="spc1.errors.required">*please enter Spoc Name</p>
+                  </section>
+              </div>
+              <div class="col-sm-6"><br>
+                  <label style="color: black;">Address</label>
+                  <input id="address" [(ngModel)]="address" name="address" required="required" class="form-control" required="true"
+                    type="text" placeholder="Enter address" #addr1="ngModel"
+                    [ngClass]="{'is-invalid':addr1.invalid && addr1.touched}" pattern="[0-9]|[A-Z/a-z]| |#|,|-">
+                  <section *ngIf="addr1.invalid && addr1.touched" class="invalid-feedback">
+                  <p *ngIf="addr1.errors.required">*please enter Address</p>
+                  </section>
+              </div>
+              <div class="col-sm-6"><br>
+                  <label style="color: black;">Contact Number</label>
+                  <input id="contact_number" [(ngModel)]="contact_number" name="contact_number" class="form-control" required="true"
+                    type="text" placeholder="Enter contact number" #cnum1="ngModel"
+                    [ngClass]="{'is-invalid':cnum1.invalid && cnum1.touched}" pattern="^((\\+91-?)|0)?[0-9]{10}$">
+                  <section *ngIf="cnum1.invalid && cnum1.touched" class="invalid-feedback">
+                  <p *ngIf="cnum1.errors.required">*please enter Contact Number</p>
+                  </section>
+              </div>
+          </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                  <div>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" [disabled]="add.invalid"
+                    (click)=add_cust(add)>Submit</button>
+                  </div>
+                </div>
+            </div>
+         
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <table class="table table-condensed tile ">
+
+    <thead>
+      <tr>
+        <th>Customer Id</th>
+        <th>Customer Name</th>
+        <th>Location</th>
+        <th>Spoc</th>
+
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of customerlist | paginate: { itemsPerPage: 10, currentPage: p } let i= index'>
+        <td>{{item.customer_id}}</td>
+        <td>{{item.customer_name}}</td>
+        <td>{{item.location}}</td>
+        <td>{{item.spoc}}</td>
+
+        <td (click)='edit(item)'> <img src="assets/pen.png" height="20" width="20" data-toggle="modal"
+            data-target="#myModal" width="20"></td>
+        <td> <img src="assets/delete.png" height="20" width="20" (click)='deleterecord(item.customer_id)'></td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+</div>
+ 
+
+
+  <div id="myModal" class="modal"data-keyboard="false" data-backdrop="static" >
+    <div class="modal-dialog modal-newsletter">
+      <div class="modal-content">
+        <div class="modal-body text-left">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Customer</h4>
+                <button type="button" class="close"  (click)="clear(add.value);add.reset()" data-dismiss="modal">&times;</button>
+              </div>
+
+            <form #editform="ngForm" (ngSubmit)="update_cust(editform)">
+              <div class="row">
+                  <div class="col-sm-6"><br>
+                    <label style="color: black;">Customer Id</label>
+                    <input id="customerid" [(ngModel)]="customer_id" name="customer_id" class="form-control" required="true"
+                      type="number" placeholder="Enter customer id" readonly>
+                  </div>
+                  <div class="col-sm-6"><br>
+                      <label style="color: black; ">Customer Name</label>
+                      <input id="customername" [(ngModel)]="customer_name" name="customer_name" placeholder="Enter customer name"
+                        required class="form-control" required="true" type="text" #cname="ngModel"
+                        [ngClass]="{'is-invalid':cname.invalid && cname.touched}" pattern="[^-\s][a-zA-Z\s]*">
+                        <section *ngIf="cname.invalid && cname.touched" class="invalid-feedback">
+                        <p *ngIf="cname.errors.required">*please enter Customer Name</p>
+                        </section>
+                    </div>
+                    <div class="col-sm-6"><br>
+                        <label style="color: black;">Email Id</label>
+                        <input id="emailid" [(ngModel)]="email_id" name="email_id" required="required" class="form-control" required="true"
+                          type="text" placeholder="Enter email id" #email="ngModel"
+                          [ngClass]="{'is-invalid':email.invalid && email.touched}" pattern= "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        <section *ngIf="email.invalid && email.touched" class="invalid-feedback">
+                        <p *ngIf="email.errors.required">*please enter Email</p>
+                        </section>
+                    </div>
+                    <div class="col-sm-6"><br>
+                        <label style="color: black;"> Job Location</label>
+                        <input id="jlocation" [(ngModel)]="location" name="location" class="form-control" required="true"
+                          type="text" placeholder="Enter location" #jbloc="ngModel"
+                          [ngClass]="{'is-invalid':jbloc.invalid && jbloc.touched}" pattern="[^-\s][a-zA-Z\s]*">
+                        <section *ngIf="jbloc.invalid && jbloc.touched" class="invalid-feedback">
+                        <p *ngIf="jbloc.errors.required">*please enter Job Location</p>
+                        </section>
+                    </div>
+                    <div class="col-sm-6"><br>
+                        <label style="color: black;">Spoc</label>
+                        <input id="spoc1" [(ngModel)]="spoc" name="spoc" class="form-control" required="true"
+                          type="text" placeholder="Enter spoc name" #spc="ngModel"
+                          [ngClass]="{'is-invalid':spc.invalid && spc.touched}" pattern="[^-\s][a-zA-Z\s]*">
+                        <section *ngIf="spc.invalid && spc.touched" class="invalid-feedback">
+                        <p *ngIf="spc.errors.required">*please enter Spoc Name</p>
+                        </section>
+                    </div>
+                    <div class="col-sm-6"><br>
+                        <label style="color: black;">Address</label>
+                        <input id="address1" [(ngModel)]="address" name="address" required="required" class="form-control" required="true"
+                          type="text" placeholder="Enter address" #addr="ngModel"
+                          [ngClass]="{'is-invalid':addr.invalid && addr.touched}" pattern="[0-9]|[A-Z/a-z]| |#|,|-">
+                        <section *ngIf="addr.invalid && addr.touched" class="invalid-feedback">
+                        <p *ngIf="addr.errors.required">*please enter Address</p>
+                        </section>
+                    </div>
+                    <div class="col-sm-6"><br>
+                        <label style="color: black;">Contact Number</label>
+                        <input id="contactnumber" [(ngModel)]="contact_number" name="contact_number" class="form-control" required="true"
+                          type="text" placeholder="Enter contact number" #cnum="ngModel"
+                          [ngClass]="{'is-invalid':cnum.invalid && cnum.touched}" pattern="^((\\+91-?)|0)?[0-9]{10}$">
+                        <section *ngIf="cnum.invalid && cnum.touched" class="invalid-feedback">
+                        <p *ngIf="cnum.errors.required">*please enter Contact Number</p>
+                        </section>
+                    </div>
+            </div> 
+            <div class="modal-footer">
+                <div class="row">
+                  <div>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" [disabled]="editform.invalid"
+                    (click)=update_cust(editform)>Update</button>
+                  </div>
+                </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+
+
+

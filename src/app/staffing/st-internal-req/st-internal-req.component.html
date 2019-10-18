@@ -1,0 +1,167 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+  <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+  <div>
+    <h1>Internal Req Approving Candidates</h1>
+  </div>    
+</div>
+
+<div id="myView" class="modal">
+  <div class="modal-dialog modal-newsletter">
+    <div class="modal-content">
+      <div class="modal-body text-left">
+        <form #editform="ngForm">						    
+          <div class="modal-header">
+            <h4 class="modal-title">Req Info</h4>                                                                                                                                                                                                                     
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+      
+      <!-- <div style="margin: 25px" >      -->
+        <div class="row">
+          <div class="col-sm-6">
+            <label >Int Req Id</label>
+            <input [(ngModel)]="internal_id" name="internal_id" class="form-control" placeholder="Int Req Id" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Budget</label>
+            <input [(ngModel)]="budget" name="budget" class="form-control" placeholder="Budget" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Business Unit</label>
+            <select [(ngModel)]="bu_name" name="bu_name" class="form-control" placeholder="Business Unit" readonly>
+              <option *ngFor = 'let sbun of bunit; let i = index' value="{{sbun.bu_id}}">{{sbun.bu_name}}</option>
+            </select>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Cost Center Name</label>
+            <input [(ngModel)]="cost_center_name" name="cost_center_name" class="form-control" placeholder="Cost Center Id" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Expected Date Of Joining</label>
+            <input [(ngModel)]="date_of_joining" name="date_of_joining" class="form-control" placeholder="Date Of Joining" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+              <label >Raised By</label>
+              <input [(ngModel)]="employee_name" name="employee_name" class="form-control" placeholder="Employee Name" readonly>
+              <br>
+            </div>
+          <div class="col-sm-6">
+            <label >Notice Period</label>
+            <input [(ngModel)]="notice_period" name="notice_period" class="form-control" placeholder="Notice Period" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Employee Type</label>
+            <select [(ngModel)]="employee_type" name="employee_type" class="form-control" placeholder="Employee Type" readonly>
+              <option *ngFor = 'let bc of elst; let i = index' value="{{bc.type_id}}">{{bc.employee_type}}</option>
+            </select>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Request Raised Date</label>
+            <input [(ngModel)]="request_raised_date" name="request_raised_date" class="form-control" placeholder="Request Raised Date" readonly>
+          </div>
+          <div class="col-sm-6">
+            <label >Skills</label>
+            <input [(ngModel)]="skills" name="skills" class="form-control" placeholder="Skills" readonly>
+            <br>
+          </div> 
+          <div class="col-sm-6">
+            <label>Sub Business Unit Name</label>
+            <select [(ngModel)]="sbu_name" name="sbu_name" class="form-control" placeholder="Sub Business Unit" readonly>
+              <option *ngFor = 'let ab of sbunit; let i = index' value="{{ab.sbu_id}}">{{ab.sbu_name}}</option>
+            </select>
+            <br>
+          </div> 
+          <div class="col-sm-6">
+            <label>Years Of Experience</label>
+            <input [(ngModel)]="years_of_experience" name="years_of_experience" class="form-control" placeholder="Years Of Experience" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label >Status</label>
+            <input [(ngModel)]="status" name="status" class="form-control" placeholder="Status" readonly>
+            <br>
+          </div>
+
+          <div class="col-sm-12">
+                <label style="color: black; ">Message</label>
+                <br>
+              <textarea [(ngModel)]="Message" name="Message" placeholder="Enter Message" rows = "3" cols = "30" name = "description" class="form-control" placeholder="Message">
+              </textarea>
+            </div>
+        </div>
+
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="update_approval(editform.value,'Approved')" style="background-color: #568034" [disabled]="!Message">Approve</button>
+  
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" 
+                style="background-color: #fe0000" (click)="update_approval(editform.value,'Rejected')" [disabled]="!Message">Reject</button>
+  
+                <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                style="background-color: #c55b11" (click)="update_approval(editform.value,'Send Back')" [disabled]="!Message">Send Back</button>
+  
+          </div>
+        </form>
+      </div>
+    </div>
+      <!-- </div>     -->
+    </div>
+  <!-- </div> -->
+</div>
+  
+<div class="row top table-responsive"style="margin-right: 0px; margin-left: 0px;" *ngIf = "f_data">
+  <table class="table table-condensed tile " >
+    <thead>
+      <tr>
+        <th>Req Id</th>
+        <th>Employee Name</th>
+        <th>Skills</th>
+        <th>Years Of Experience</th>
+        <th>Contact Number</th>
+        <th>Request Raised Date</th>
+        <th>Status</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of get_approvalinternalreq_byuserid | paginate: { itemsPerPage: perPage, currentPage: currentpage, totalItems: totalitems };let i = index '>
+        <td>{{item.req_id}}</td>
+        <td>{{item.employee_name}}</td>
+        <td>{{item.skills}}</td> 
+        <td>{{item.years_of_experience}}</td>  
+        <td>{{item.contact_number}}</td>
+        <td>{{item.request_raised_date}}</td>
+        <td *ngIf="item.status === 'Approved'">
+          <span class="approved">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Raised'">
+            <span class="raised">{{item.status}}</span>
+          </td>
+          <td *ngIf="item.status === 'Rejected'">
+            <span class="rejected">{{item.status}}</span>
+            </td>
+            <td *ngIf="item.status === 'Send Back'">
+                <span class="sentback">{{item.status}}</span>
+              </td>
+        <!-- <td>{{item.status}}</td> -->
+        
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)=view(get_approvalinternalreq_byuserid[i]) >View</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="pagechange($event)" class="pull-right"></pagination-controls> 
+</div>
+<div class="container" *ngIf = "fd_data">
+    <div class="jumbotron">
+      <h3 class="text-center">No reqs have been raised </h3>      
+      <!-- <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p> -->
+    </div>    
+  </div> 

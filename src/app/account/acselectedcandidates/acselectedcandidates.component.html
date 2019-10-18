@@ -1,0 +1,187 @@
+<div class="app-title">
+  <div>
+    <h1>Selected_Candidates</h1>
+  </div>
+   
+</div>
+
+
+<br><br>
+<!-- The Modal -->
+<div class="modal" id="myView" >
+<div class="modal-dialog">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">View</h4>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+<!-- Modal body -->
+<div style="margin: 25px" >
+
+<form #data="ngForm"  >
+<div class="row">
+<div class="col-sm-6" offset="1"><div class="form-group">
+      <label >Reference_number: </label>
+      <div  inputGroupContainer>
+         <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+         <input [(ngModel)]='req_id' placeholder="Employee_id" class="form-control"  name="req_id" type="text"  ><br>
+      </div>
+      </div>
+
+   </div></div>
+<div class="col-sm-6"><div class="form-group">
+      <label >employee_name: </label>
+      <div  inputGroupContainer>
+         <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+         <input id="fullName"   [(ngModel)]='employee_name' name="employee_name " placeholder="employee_name" class="form-control" required="true" value="sai" type="text"><br>
+      </div>
+      </div>
+   </div></div>
+</div>
+<div class="row">
+   <div class="col-sm-6"><div class="form-group">
+      <label >designation: </label>
+      <div  inputGroupContainer>
+         <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="fullName"  [(ngModel)]='designation' name="designation" placeholder="designation" class="form-control" required="true" value="" type="text"><br></div>
+      </div>
+   </div></div>
+   <div class="col-sm-6"><div class="form-group">
+      <label >email_id: </label>
+      <div  inputGroupContainer>
+         <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="fullName"  [(ngModel)]='email' name="email" placeholder="Email Id" class="form-control" required="true" value="" type="text"><br></div>
+      </div>
+   </div></div>
+</div>
+<div class="row">
+      <div class="col-sm-6"><div class="form-group">
+         <label >contact_number: </label>
+         <div  inputGroupContainer>
+            <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="fullName"  [(ngModel)]='contact_number' name="contact_number" placeholder="contact_number" class="form-control" required="true" value="" type="text"><br>
+         </div>
+         </div>
+      </div></div>
+      <div class="col-sm-6"><div class="form-group">
+         <label >employee_type: </label>
+         <div  inputGroupContainer>
+            <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="fullName"  [(ngModel)]='employee_type' name="employee_type" placeholder="employee_type" class="form-control" required="true" value="" type="text"><br>
+         </div>
+         </div>
+      </div></div>
+   </div>
+   <div class="row">
+      <div class="col-sm-6"><div class="form-group">
+            <label >external_id :</label>
+            <div  inputGroupContainer>
+               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+               <input id="fullName"  [(ngModel)]='external_req_id' name="external_req_id" placeholder="external_req_id" class="form-control" required="true" value="" type="text"><br>
+            </div>
+            </div>
+         </div></div>
+      <div class="col-sm-6"><div class="form-group">
+            <label >CTC :</label>
+            <div  inputGroupContainer>
+               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+               <input id="fullName"  [(ngModel)]='ctc' name="ctc" placeholder="ctc" class="form-control" required="true" value="" type="text"><br>
+            </div>
+            </div>
+         </div></div>
+      </div>
+      <div class="row">
+         <div class="col-sm-6"><div class="form-group">
+            <label >flag :</label>
+            <div  inputGroupContainer>
+               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input id="fullName"  [(ngModel)]='flag' name="flag" placeholder="flag" class="form-control" required="true" value="" type="text"><br>
+               </div>
+            </div>
+         </div></div>
+         <div class="col-sm-6"><div class="form-group">
+            <label >job_location: </label>
+            <div  inputGroupContainer>
+               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input id="fullName"  [(ngModel)]='job_location' name="job_location" placeholder="job_location" class="form-control" required="true" value="" type="text"><br>
+               </div>
+            </div>
+         </div></div>
+      </div>
+      <div class="row">
+            <div class="col-sm-6"><div class="form-group">
+               <label >joining_date: </label>
+               <div  inputGroupContainer>
+                  <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input type="date"  min="{{currentDate | date:'dd-MM-yyyy'}}" [(ngModel)]='date_of_joining' name="date_of_joining" placeholder="joining_date" class="form-control" required="true" value=""><br>
+               </div>
+               </div>
+            </div></div>
+            <div class="col-sm-6"><div class="form-group">
+               <label >offer_validity_date: </label>
+               <div  inputGroupContainer>
+                  <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input type="date"  min="{{currentDate | date:'dd-MM-yyyy'}}" [(ngModel)]='offer_validity_date' name="offer_validity_date" placeholder="offer_validity_date" class="form-control" required="true" value="" ><br>
+               </div>
+               </div>
+            </div></div>
+         </div>
+
+         <!-- <div>
+            <label style="color: black; margin-right: 100em">ExpectedDateOfJoining</label>
+            <br>
+            <input id="date_of_joining" min="{{currentDate | date:'dd-MM-yyyy'}}"  [(ngModel)]="edit_date_of_joining"  name="edit_date_of_joining" placeholder="Expected_Date_Of_Joining"
+            class="form-control" required="true"  type="date">
+         </div>
+         <div>
+            <label style="color: black; margin-right: 100em">Noticeperiod</label>
+            <br>
+            <input id="notice_period period" min="{{currentDate | date:'dd-MM-yyyy'}}" [(ngModel)]="edit_notice_period"  name="edit_notice_period" placeholder="Notice period"
+            class="form-control" required="true"  type="date">
+         </div> -->
+
+         </form>
+   </div>
+<!-- Modal footer -->
+<div class="modal-footer">
+<button type="submit" class="btn btn-primary" data-dismiss="modal" >Close</button>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf = "data1">
+<table class="table table-condensed tile " >
+<thead>
+<tr>
+<th>Reference_number</th>
+<th>Email Id </th>
+<th>Employee_name</th>
+<th>Contact_number</th>
+
+<th>Joining_date</th>
+<th>View</th> 
+</tr>
+</thead>
+<tbody>
+<tr *ngFor='let item of ResulatantUser; let i = index' >
+<td>{{item.req_id}}</td>
+<td>{{item.email}}</td>
+<td>{{item.employee_name}}</td>
+<td>{{item.contact_number}}</td>
+<td>{{item.date_of_joining}}</td>
+<td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)=view(ResulatantUser[i]) >view</a></td>
+<tr>
+</tr>
+</tbody>
+</table> 
+</div>
+
+<div *ngIf = "em_data" class="jumbotron">
+<h1 style="text-align: center"> No Candidate is selected up to now</h1>
+</div>

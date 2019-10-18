@@ -1,0 +1,181 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+  <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+  <div>
+    <h1>Respond To Reqs</h1>
+  </div>
+</div>
+
+<div class="jumbotron" *ngIf="!bool">
+  <h1 style="text-align: center">{{notify}}</h1>
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf='bool'>
+  <table class="table table-condensed tile ">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Req Id</th>
+        <th>Raised By</th>
+        <th>Contact Number</th>
+        <th>Skills</th>
+        <th>Experience</th>
+        <th>Customer</th>
+        <th>Req Raised On</th>
+        <th>Status</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of ApprovalsExternal  | paginate: { itemsPerPage: perPage, currentPage: currentpage, totalItems: totalitems, numOfpages: numOfPages }; let i = index'>
+        <td>{{i+1}}</td>
+        <td>{{item.req_id}}</td>
+        <td>{{item.employee_name}}</td>
+        <td>{{item.contact_number}}</td>
+        <td>{{item.skills}}</td>
+        <td>{{item.years_of_experience}}</td>
+        <td>{{item.customer_name}}</td>
+        <td>{{item.request_raised_date}}</td>
+        <td *ngIf="item.status === 'Approved'">
+          <span class="approved">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Raised'">
+            <span class="raised">{{item.status}}</span>
+          </td>
+          <td *ngIf="item.status === 'Rejected'">
+            <span class="rejected">{{item.status}}</span>
+            </td>
+            <td *ngIf="item.status === 'Sentback'">
+                <span class="sentback">{{item.status}}</span>
+              </td>
+        <td> <img src="assets/view.png" height="20" width="20" data-toggle="modal" data-target="#ViewModal"
+          (click)='edit(item)'></td>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="pagechange($event)"  class="pull-right"></pagination-controls>
+  </div>
+
+  
+
+
+
+
+  <!-- view data target -->
+<div id="ViewModal" class="modal" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-newsletter">
+    <div class="modal-content">
+      <div class="modal-body text-left">
+        <form #editform="ngForm">
+        <div class="modal-header">
+          <h4 class="modal-title">View Req</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <label style="color: black; ">Employee Id</label>
+              <input id="user_id" [(ngModel)]="edit_user_id" name="edit_user_id" readonly class="form-control"
+              ngModel required type="text" readonly>
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">ExternalReq Id</label>
+              <input id="external_id" [(ngModel)]="edit_external_id" name="edit_external_id" readonly
+                class="form-control" ngModel required type="number">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Customers</label>
+              <br>
+              <select [(ngModel)]="edit_customer_Id" name="edit_customer_Id" ngModel required class="form-control" readonly>
+                <option *ngFor='let abc of customerName; let i = index' value={{abc.customer_id}}>{{abc.customer_name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Account Manager</label>
+              <br>
+              <select [(ngModel)]="edit_account_manager" name="edit_account_manager" ngModel required readonly
+                class="form-control">
+                <option *ngFor='let abc of acoountManager; let i = index' value={{abc.employee_id}}>
+                  {{abc.employee_name}} </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Skill</label>
+              <br>
+              <input id="skill" [(ngModel)]="edit_skills" name="edit_skills" placeholder="skill" class="form-control" readonly
+              ngModel required type="text">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Years Of Experince</label>
+              <input id="years_of_experince" [(ngModel)]="edit_years_of_experience" name="edit_years_of_experience" readonly
+                placeholder="years_of_experince" class="form-control" ngModel required type="number">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Job Location</label>
+              <input id="job_location" [(ngModel)]="edit_job_location" name="edit_job_location" readonly
+                placeholder="job_location" class="form-control" ngModel required type="text">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Customer Approved CTC</label>
+              <br>
+              <input id="edit_customer_offer_ctc" [(ngModel)]="edit_customer_approved_budget"
+                name="edit_customer_approved_budget" placeholder="customer_approved_budget" class="form-control" maxlength="10" readonly
+                ngModel required type="number">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Expected CTC</label>
+              <br>
+              <input id="expected_budget" [(ngModel)]="edit_expected_budget" name="edit_expected_budget" maxlength="10" readonly
+                placeholder="expected_budget" class="form-control" ngModel required type="number">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Margin</label>
+              <br>
+              <input id="margin" [(ngModel)]="edit_margin" name="edit_margin" placeholder="Margin" class="form-control" readonly
+              ngModel required type="number">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Expected Date Of Joining</label>
+              <br>
+              <input id="date_of_joining" min="{{currentDate | date:'yyyy-MM-dd'}}" [(ngModel)]="edit_date_of_joining" readonly
+                name="edit_date_of_joining" placeholder="Expected_Date_Of_Joining" class="form-control" ngModel required
+                type="date">
+            </div>
+            <div class="col-sm-6">
+              <label style="color: black; ">Notice period</label>
+              <br>
+              <input id="notice_period period" min="{{currentDate | date:'yyyy-MM-dd'}}"
+                [(ngModel)]="edit_notice_period" name="edit_notice_period" placeholder="Notice period" readonly
+                class="form-control" ngModel required type="date">
+            </div>
+            <div class="col-sm-12">
+                <label style="color: black; ">Message</label>
+                <br>
+              <textarea [(ngModel)]="description" name="description" placeholder="Enter Message" rows = "3" cols = "30" pattern="[^-\s][a-zA-Z0-9-_\s]*" 
+               class="form-control" #message = "ngModel" required></textarea>
+              
+            
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal"
+              (click)="update_approval(editform.value,'Approved')" style="background-color: #568034" [disabled]="message.invalid" >Approve</button>
+
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" 
+              style="background-color: #fe0000" (click)="update_approval(editform.value,'Rejected')" [disabled]="message.invalid">Reject</button>
+
+              <button type="submit" class="btn btn-primary" data-dismiss="modal"
+              style="background-color: #c55b11" (click)="update_approval(editform.value,'Sent back')" [disabled]="message.invalid">Send Back</button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- (editform.value) -->

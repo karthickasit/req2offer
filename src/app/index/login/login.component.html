@@ -1,0 +1,114 @@
+
+<section class="material-half-bg">
+		 <div class="cover"></div> 
+	</section>
+
+	<h1 style="text-align:center;">Welcome to Req2Offer</h1>
+	<section class="login-content">
+	
+		
+		<div class="login-box">
+			<form class="login-form"  [formGroup]="OBSLoginForm" (ngSubmit)="LoginAction(OBSLoginForm.value)">
+				<h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
+				 <div class="form-group">
+						<label>Email</label>
+						<div class="input-group">
+							<input type="text" formControlName="email" placeholder="Enter Email" class="form-control" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }" />
+							<!-- <div class="input-group-append">
+									<span class="input-group-addon" style="padding-top: 10px;padding-left: 10px;padding-right:10x;border:2px solid #ced4da"><span class="fa fa-envelope" aria-hidden="true"></span></span>
+							</div> -->
+							<div *ngIf="f.email.touched && f.email.errors" class="invalid-feedback">
+								<div *ngIf="f.email.errors.required">Email is required</div>
+								<div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+							</div>
+						</div>
+                    </div>
+				
+				
+				<div class="form-group">
+						<label>Password</label>
+						<div class="input-group">
+							<input [type]="show_button ? 'text' : 'password'"  placeholder="password" required="required" formControlName="password"  class="form-control" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+
+							<div class="input-group-append">
+								<span class="input-group-addon" [class]="show_eye ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showPassword()" style="padding-top: 10px;padding-left: 10px;padding-right:10px;border:2px solid #ced4da"></span>
+							</div>
+						
+                        <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+						</div>
+					</div>
+                    </div>
+
+
+
+				<div class="form-group">
+					<div class="utility">
+						<div class="animated-checkbox">
+							<label>
+								<input type="checkbox"><span class="label-text">Stay Signed in</span>
+							</label>
+						</div>
+						<a href="#myModal" class="trigger-btn" data-toggle="modal" class="forgot-link">Forgot Password ?</a>
+					</div>
+				</div>
+				<div class="form-group btn-container">
+					<button class="btn btn-primary btn-block" data-toggle="modal" data-target="#showpop" ><i class="fa fa-sign-in fa-lg fa-fw">
+					</i>SIGN IN</button>
+				</div>	
+			</form>
+		</div>
+
+<!-- forgot form -->
+	<div id="myModal" class="modal fade" style="margin-top: 20em" data-keyboard="false" data-backdrop="static" >
+		<div class="modal-dialog modal-newsletter">
+			<div class="modal-content">						
+				<div class="modal-body text-center">
+						<div class="modal-header">
+							<h5>Enter Registered mail Id</h5>
+							<button type="button" class="close"  data-dismiss="modal" (click)="clear()">&times;</button>
+						</div>	
+				<form [formGroup]="forgotpassword">
+					<div class="form-group">	 
+					<input type="string" class="form-control" id="exampleInputEmail1" formControlName="email_id" 
+					aria-describedby="emailHelp" placeholder="Enter Email_id">
+					<br>
+					<button type="submit" class="btn btn-primary" (click)="user(forgotpassword.value)">
+						Submit</button>			
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	
+<!-- <div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3>Angular 6 Reactive Form Validation</h3>
+				<form class="login-form"  [formGroup]="OBSLoginForm" (ngSubmit)="LoginAction(OBSLoginForm.value)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': f.email.touched && f.email.errors }" />
+                        <div *ngIf="f.email.touched && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+						<input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors }" />
+                        <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ -->

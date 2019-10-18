@@ -1,0 +1,496 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white; margin-top: 40px" > Loading... </p>
+  </ngx-spinner>
+  <div class="app-title">
+    <div>
+      <h1> InternalReqs</h1>
+    </div>
+  
+  </div>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-right: 155ex; ">
+    Add New Req
+  </button>
+  <br><br>
+  
+  <!--  Add REQ --->
+  
+    
+      <div class="modal" id="myModal" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Raise New Internal Req</h4>
+  
+              <button type="button" class="close" (click)="clear(data.value);data.reset()" data-dismiss="modal">&times;</button>
+            </div>
+            <form #data="ngForm" (ngSubmit)="addInternalreq(data)" >
+
+            <div style="margin: 25px">
+              <div class="row">
+  
+                <!-- <div class="col-sm-6">
+                  <label>User Id</label>
+  
+                  <input id="user_id" [(ngModel)]="user_id" name="user_id" readonly class="form-control" required="true"
+                    type="text" value={{user_id}}>
+                    <br>
+                </div>
+                  -->
+                <div class="col-sm-6">
+                  <label>BU Name</label>
+                  <br>
+                  <select [(ngModel)]="business_unit" name="business_unit" required class="form-control" #bufld="ngModel"
+                    [ngClass]="{'is-invalid':bufld.invalid && bufld.touched}">
+                    
+                    <option *ngFor='let abc of businessunit; let i = index' value={{abc.bu_id}}>
+                      {{abc.bu_name}} </option>
+                  </select>
+                  <section *ngIf="bufld.invalid && bufld.touched" class="invalid-feedback">
+                    <p *ngIf="bufld.errors.required">*please enter Bu Name</p>
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+  
+                  <label>SBU Name</label>
+                  <br>
+                  <select [(ngModel)]="sub_business_unit" name="sub_business_unit" class="form-control" required
+                    #sbfld="ngModel" [ngClass]="{'is-invalid':sbfld.invalid && sbfld.touched}"> 
+                    <option></option>
+                    <option *ngFor='let abc of filtersbu(business_unit); let i = index' value={{abc.sbu_id}}>
+                      {{abc.sbu_name}} </option>
+                    
+                  </select>
+                  <section *ngIf="sbfld.invalid && sbfld.touched" class="invalid-feedback">
+                    <p *ngIf="sbfld.errors.required">*please enter SBU</p>
+                  </section>
+                  <br>
+                </div>
+  
+  
+                <div class="col-sm-6"> 
+                  <label>Employee Type</label>
+                  <br>
+                  <select [(ngModel)]="employee_type" name="employee_type" required class="form-control" #etfld="ngModel"
+                    [ngClass]="{'is-invalid':etfld.invalid && etfld.touched}">
+                    <option *ngFor='let abc of emptype; let i = index' value={{ConvertToInt(abc.type_id)}}>
+                      {{abc.employee_type}} </option>
+                  </select>
+                  <section *ngIf="etfld.invalid && etfld.touched" class="invalid-feedback">
+                    <p *ngIf="etfld.errors.required">*please enter Employee Type</p>
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label>Cost Center </label>
+                  <br>
+                  <select [(ngModel)]="cost_center_id" name="cost_center_id" required class="form-control"
+                    #ccfld="ngModel" [ngClass]="{'is-invalid':ccfld.invalid && ccfld.touched}">
+                    <option *ngFor='let abc of costcenter; let i = index' value={{ConvertToInt(abc.cost_center_id)}}>
+                      {{abc.cost_center_id}} </option>
+                  </select>
+                  <section *ngIf="ccfld.invalid && ccfld.touched" class="invalid-feedback">
+                    <p *ngIf="ccfld.errors.required">*please enter Cost Center</p>
+                  </section>
+                  <br>
+                </div>
+  
+  
+                <div class="col-sm-6">
+                  <label>Skill</label>
+                  <input id="skill" [(ngModel)]="skill" name="skill" placeholder="skill" class="form-control"
+                    #sfld="ngModel" type="text" required [ngClass]="{'is-invalid':sfld.invalid && sfld.touched}">
+                  <section *ngIf="sfld.invalid && sfld.touched" class="invalid-feedback">
+                    <p *ngIf="sfld.errors.required">*please enter skill</p>
+  
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label>Budget</label>
+                  <input id="budget" [(ngModel)]="budget" name="budget" placeholder="budget" class="form-control"
+                    #bfld="ngModel" required type="number" maxlength="5"
+                    [ngClass]="{'is-invalid':bfld.invalid && bfld.touched}">
+                  <section *ngIf="bfld.invalid && bfld.touched" class="invalid-feedback">
+                    <p *ngIf="bfld.errors.required">*please enter budget</p>
+                    <p *ngIf="bfld.errors.maxlength">value should range in 1 to 15</p>
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label>Years Of Experince</label>
+                  <input id="yearsOfExperince" [(ngModel)]="years_of_experience" name="years_of_experience"
+                    placeholder="yearsOfExperince" class="form-control" #yfld="ngModel" required type="number"
+                    [ngClass]="{'is-invalid':yfld.invalid && yfld.touched}">
+                  <section *ngIf="yfld.invalid && yfld.touched" class="invalid-feedback">
+                    <p *ngIf="yfld.errors.required">*please enter yearsOfExperince</p>
+  
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label for="expected_date_of_joining">Expected Date Of Joining</label>
+                  <input type="date" min="{{currentDate | date:'yyyy-MM-dd'}}" [(ngModel)]="expected_doj" #efld="ngModel"
+                    name="expected_doj" placeholder="expected_date_of_joining" class="form-control" required
+                    [ngClass]="{'is-invalid':efld.invalid && efld.touched}">
+                  <section *ngIf="efld.invalid && efld.touched" class="invalid-feedback">
+                    <p *ngIf="efld.errors.required">*please enter expected_doj</p>
+                  </section>
+               
+                </div>
+  
+  
+                <div class="col-sm-6">
+                  <label for="notice_periods">Notice Period</label>
+                  <input type="date" min="{{currentDate | date:'yyyy-MM-dd'}}" [(ngModel)]="notice_period"
+                    name="notice_period" class="form-control" required #npfld="ngModel"
+                    [ngClass]="{'is-invalid':npfld.invalid && npfld.touched}">
+                  <section *ngIf="npfld.invalid && npfld.touched" class="invalid-feedback">
+                    <p *ngIf="npfld.errors.required">*please enter expected_doj</p>
+                  </section>
+                  
+                </div>
+              </div>
+            </div>
+            </form> 
+  
+            <!-- Modal footer -->
+            <div class="modal-footer">
+  
+              <button type="submit" class="btn btn-primary" data-target="#message" data-dismiss="modal"
+                [disabled]="data.invalid" (click)=addInternalreq(data) (click) = 'erase()'>Submit</button>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    
+    <div class="modal" id="message">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <h1>details are saved sucessfully </h1>
+        </div>
+      </div>
+    </div>
+  
+  
+  <!-- message -->
+  
+  
+  <!-- 
+  Edit ReQ-->
+  <div>
+    <form #editdata="ngForm" (ngSubmit)="update(editdata)">
+      <div class="modal" id="Editdata">
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <!-- Modal Header  -->
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Req Details</h4>
+  
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+  
+  
+  
+  
+  
+            <div style="margin: 25px">
+              <div class="row">
+  
+                <div class="col-sm-6">
+                  <label>Internal req id</label>
+  
+                  <input id="user_id" [(ngModel)]="int_req_id" name="int_req_id" readonly class="form-control"
+                    required="true" type="text">
+                    <br>
+                </div>
+                
+                <div class="col-sm-6">
+                  <label>User Id</label>
+  
+                  <input id="user_id" [(ngModel)]="user_id" name="user_id" readonly class="form-control" required="true"
+                    type="text">
+                </div>
+                <div class="col-sm-6">
+                  <label>BU Name</label>
+                  <br>
+                  <select [(ngModel)]="edit_business_unit" name="edit_business_unit" required="required"
+                    class="form-control" #ebufld="ngModel" [ngClass]="{'is-invalid':ebufld.invalid && ebufld.touched}">
+                    <option *ngFor='let abc of businessunit; let i = index' placeholder="bu_name" value={{abc.bu_id}}>
+                      {{abc.bu_name}} </option>
+  
+  
+                    <section *ngIf="ebufld.invalid && ebufld.touched" class="invalid-feedback">
+                      <p *ngIf="ebufld.errors.required">*please enter Bu Name</p>
+                    </section>
+                  </select>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+  
+                  <label>SBU Name</label>
+                  <br>
+                  <select [(ngModel)]="edit_sub_business_unit" name="edit_sub_business_unit" required="required"
+                    class="form-control" #esbfld="ngModel" [ngClass]="{'is-invalid':esbfld.invalid && esbfld.touched}">
+  
+                    <option *ngFor='let abc of subbusinessunit; let i = index' value={{abc.sbu_id}}>{{abc.sbu_name}}
+                    </option>
+                    <section *ngIf="esbfld.invalid && esbfld.touched" class="invalid-feedback">
+                      <p *ngIf="esbfld.errors.required">*please enter SBU</p>
+                    </section>
+                  </select>
+  
+                </div>
+  
+  
+                <div class="col-sm-6">
+                  <label>Employee Type</label>
+                  <br>
+                  <select [(ngModel)]="edit_employee_type" name="edit_employee_type" required="required"
+                    class="form-control" #eetfld="ngModel" [ngClass]="{'is-invalid':eetfld.invalid && eetfld.touched}">
+                    <option *ngFor='let abc of emptype; let i = index' value={{ConvertToInt(abc.type_id)}}>
+                      {{abc.employee_type}} </option>
+                  </select>
+                  <section *ngIf="eetfld.invalid && eetfld.touched" class="invalid-feedback">
+                    <p *ngIf="eetfld.errors.required">*please enter Employee Type</p>
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label>Cost Center </label>
+                  <br>
+                  <select [(ngModel)]="edit_cost_center_id" name="edit_cost_center_id" required="required"
+                    class="form-control" #eccfld="ngModel" [ngClass]="{'is-invalid':eccfld.invalid && eccfld.touched}">
+                    <option *ngFor='let abc of costcenter; let i = index' value={{ConvertToInt(abc.cost_center_id)}}>
+                      {{abc.cost_center_id}} </option>
+                  </select>
+                  <section *ngIf="eccfld.invalid && eccfld.touched" class="invalid-feedback">
+                    <p *ngIf="eccfld.errors.required">*please enter Cost Center</p>
+                  </section>
+  
+                </div>
+  
+  
+                <div class="col-sm-6">
+                  <label>Skills </label>
+                  <input id="edit_skill" [(ngModel)]="edit_skill" name="edit_skill" placeholder="skill"
+                    class="form-control" required="true" type="text" #esfld="ngModel" type="text" required
+                    [ngClass]="{'is-invalid':sfld.invalid && sfld.touched}">
+                  <section *ngIf="esfld.invalid && esfld.touched" class="invalid-feedback">
+                    <p *ngIf="esfld.errors.required">*please enter skill</p>
+  
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label>Budget</label>
+                  <input id="budget" [(ngModel)]="edit_budget" name="edit_budget" class="form-control" required="true"
+                    type="number" #ebfld="ngModel" required type="number" maxlength="5"
+                    [ngClass]="{'is-invalid':ebfld.invalid && ebfld.touched}">
+                </div>
+                <section *ngIf="ebfld.invalid && ebfld.touched" class="invalid-feedback">
+                  <p *ngIf="ebfld.errors.required">*please enter budget</p>
+                  <p *ngIf="ebfld.errors.maxlength">value should range in 1 to 15</p>
+                </section>
+  
+                <div class="col-sm-6">
+                  <label>Years Of Experince</label>
+                  <input id="yearsOfExperince" [(ngModel)]="edit_years_of_experience" name="edit_years_of_experience"
+                    class="form-control" required="true" #eyfld="ngModel" required type="number"
+                    [ngClass]="{'is-invalid':eyfld.invalid && eyfld.touched}">
+                  <section *ngIf="eyfld.invalid && eyfld.touched" class="invalid-feedback">
+                    <p *ngIf="eyfld.errors.required">*please enter yearsOfExperince</p>
+  
+                  </section>
+                  <br>
+                </div>
+  
+                <div class="col-sm-6">
+                  <label for="expected_date_of_joining">Expected Date Of Joining</label>
+                  <input type="date" [(ngModel)]="edit_expected_doj" name="edit_expected_doj"
+                    min="{{currentDate | date:'yyyy-MM-dd'}}" value="{{expected_doj}}" class="form-control"
+                    #eefld="ngModel" [ngClass]="{'is-invalid':eefld.invalid && eefld.touched}">
+                  <section *ngIf="eefld.invalid && eefld.touched" class="invalid-feedback">
+                    <p *ngIf="eefld.errors.required">*please enter expected_doj</p>
+                  </section>
+                </div>
+  
+  
+                <div class="col-sm-6">
+                  <label for="notice_periods">Notice Period</label>
+                  <input type="date" min="{{currentDate | date:'yyyy-MM-dd'}}" [(ngModel)]="edit_notice_period"
+                    name="edit_notice_period" class="form-control" #enpfld="ngModel"
+                    [ngClass]="{'is-invalid':enpfld.invalid && enpfld.touched}">
+                  <section *ngIf="enpfld.invalid && enpfld.touched" class="invalid-feedback">
+                    <p *ngIf="enpld.errors.required">*please enter expected_doj</p>
+                  </section>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Modal footer  -->
+            <div class="modal-footer">
+  
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" [disabled]="editdata.invalid"
+                (click)=update(editdata)>Submit</button>
+  
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </form>
+  
+  
+  
+    <div class="row top table table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf = 'r_data'>
+      <table class="table table-condensed tile ">
+        <thead>
+          <tr>
+            
+            <th>Req Id</th>
+            <th>Skills</th>
+            <th>Years of Experience</th>
+            <th>Request Raised Date</th>
+            <th>Expected Date of Joining</th>
+            <th>Status</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor='let item of Reqs | paginate: { itemsPerPage: perPage, currentPage: currentpage, totalItems: totalitems }; let i = index'>
+            <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#feedback"
+              (click)=feedback(item.int_req_id) title="feedback">{{item.int_req_id}}</a></td>
+           
+            <td>{{item.skills}}</td>
+            <td>{{item.years_of_experience}}</td>
+            <td>{{item.request_raised_date}}</td>
+            <td>{{item.date_of_joining}}</td>
+            <td *ngIf="item.status === 'Approved'">
+              <span class="approved">{{item.status}}</span>
+            </td>
+            <td *ngIf="item.status === 'Raised'">
+              <span class="raised">{{item.status}}</span>
+            </td>
+            <td *ngIf="item.status === 'Rejected'">
+              <span class="rejected">{{item.status}}</span>
+            </td>
+            <td *ngIf="item.status === 'Send Back'">
+              <span class="sentback">{{item.status}}</span>
+            </td>
+            <td (click)=editrecord(item)> <img src="assets/pen.png" height="20" data-toggle="modal"
+                data-target="#Editdata" width="20"></td>
+            <td (click)=deleterecord(item) style="align-items: center"> <img src="assets/delete.png" height="20"
+                width="20"></td>
+  
+          </tr>
+        </tbody>
+  
+      </table>
+      <pagination-controls (pageChange)="pagechange($event)" class="pull-right"></pagination-controls>
+    </div>
+    
+  
+        <div class="modal" id="feedback" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+    
+              <!-- Modal Header  -->
+              <div class="modal-header">
+                <h4 class="modal-title">Feedback</h4>
+    
+               
+              </div>
+    
+          <!-- Modal body -->
+         <div style="margin: 5px; " >
+    
+          <div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+            <table class="table table-condensed tile " *ngIf = "f_data">
+              <thead>
+                <tr>
+                 
+                  <th>Message </th>
+                  <th>Request Raised Date</th>
+                  <th>Reviewed By </th>
+                  <th> Reviewed Date</th>
+                  <th>Role Name</th>
+                  <th>Status</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of feedbacks" >
+               
+                  <td>{{item.message}}</td>
+                  <td>{{item.request_raised_date}}</td>
+                  <td>{{item.reviewedBy}}</td>
+                  <td>{{item.reviewedOn}}</td>
+                  <td>{{item.role_name}}</td>
+          
+                  <td *ngIf="item.status === 'Approved'">
+                    <span class="approved">{{item.status}}</span>
+                  </td>
+                  <td *ngIf="item.status === 'Raised'">
+                      <span class="raised">{{item.status}}</span>
+                    </td>
+                    <td *ngIf="item.status === 'Rejected'">
+                      <span class="rejected">{{item.status}}</span>
+                      </td>
+                      <td *ngIf="item.status === 'Send Back'">
+                          <span class="sentback">{{item.status}}</span>
+                        </td>
+                 
+             
+                <tr>
+                </tr>
+              </tbody>
+            </table>
+          
+            <div class="container" *ngIf = "fd_data">
+                <div class="jumbotron">
+                  <h3 class="text-center">No one responded on this req</h3>      
+                  <!-- <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p> -->
+                </div>    
+              </div> 
+          
+           
+    
+          
+          
+           
+          </div>
+                </div>
+          <!-- Modal footer -->
+          <div class="row">
+            <div class="offset-md-3 col-md-4">
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary text-center" data-dismiss="modal"
+                  (click)=erase() >close</button>
+            </div>
+            </div>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf = "rd_data">
+      <div class="jumbotron">
+        <h3 class="text-center">No reqs have been raised </h3>      
+        <!-- <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p> -->
+      </div>    
+    </div> 

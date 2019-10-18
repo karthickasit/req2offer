@@ -1,0 +1,182 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white;margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+    <div>
+      <h1> Selected Candidates</h1>
+    </div>
+     
+  </div>
+  
+  <div class="jumbotron" *ngIf="!bool">
+    <h1 style="text-align: center">No Selected Candidates</h1>
+  </div>
+  
+  <div class="row top table-responsive"style="margin-right: 0px; margin-left: 0px;" *ngIf='bool'>
+    <table class="table table-condensed tile " >
+      <thead>
+        <tr>
+          <th>Req Id</th>
+          <th>Raised By</th>
+          <th>Candidate Name</th>
+          <th>Technology</th>
+          <th>Interviewer</th>
+          <th>Interview Date</th>
+          <th>Experience</th>
+          <th>View</th> 
+          <th>Delete</th>
+        
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let item of getCandidateList | paginate: { itemsPerPage: 10, currentPage: p }; let i = index'>
+          <td>{{item.req_id}}</td>
+          <td>{{item.raised_by}}</td>
+          <td>{{item.candidate_name}}</td>
+          <td>{{item.technology}}</td>
+          <td>{{item.interviewer}}</td>
+          <td>{{item.interview_date}}</td>
+          <td>{{item.experience}}</td>
+          
+          <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)="getCandidateById(item.req_id, item.raised_by)" >view</a></td>
+          <td> <img src="assets/delete.png" height="20" width="20" (click)='deleterecord(item.req_id)'></td>
+        
+        <tr>
+          </tr>
+      </tbody>
+      
+  </table> 
+  </div>
+  <div class="pull-right"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+  <!-- The Modal -->
+  <div>
+    <form>
+    
+    <div class="modal" id="myView" >
+    <div class="modal-dialog">
+    <div class="modal-content">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+    <h4 class="modal-title"> Selected Candidate Deatils</h4>
+    <div style="float:right">
+    </div>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    
+    
+    <div style="margin: 25px" >   
+    <div class="row">
+    <div class="col-sm-6">
+    <label >REQ Id</label>
+    <br>
+    <input type="text" [(ngModel)]="req_id" name="req_id"   required="required" placeholder="Enter Req_Id" class="form-control" readonly   >        
+    </div>
+    <div class="col-sm-6">
+    <label >Raised By</label>
+    <br>
+    <input type="text" [(ngModel)]="raisedBy" name="raisedBy"   required="required" placeholder="Enter Raised By" class="form-control" readonly   >        
+    
+    </div>
+    </div>
+    <br>
+    
+    
+    <div class="row">
+    
+    <div class="col-sm-6">
+    <label >Years Of Experince</label>
+    <input id="years_of_experience" [(ngModel)]="experience"  name="years_of_experience" placeholder="Enter Years of Experience"
+    class="form-control" required="true" readonly type="text">
+    </div>
+
+    <div class="col-sm-6">
+      <label >Technology</label>
+      <input id="technology"  [(ngModel)]="technology"  name="technology" placeholder="Enter Technology"
+      class="form-control" required="true" readonly type="text">
+      
+      </div>
+    </div>
+    
+    
+    <br>
+    <div class="row">
+     
+      
+      <div class="col-sm-6">
+      <label >Others</label>
+      <input id="others" [(ngModel)]="others"  name="others" placeholder="Enter Others"
+      class="form-control" required="true" readonly type="text">
+      </div>
+      <div class="col-sm-6">
+        <label >Email</label>
+        <input id="email"  [(ngModel)]="email"  name="email" placeholder="Enter Email"
+        class="form-control" required="true" readonly type="text">
+        
+        </div>
+      </div>
+      
+      <br>
+    <div class="row">
+      
+      
+      <div class="col-sm-6">
+      <label >Created Date</label>
+      <input id="created_date" [(ngModel)]="created_date"  name="created_date" placeholder="Enter Created Date"
+      class="form-control" required="true" readonly type="date">
+      </div>
+      <div class="col-sm-6">
+        <label >Interviewer</label>
+        <input id="interviewer" [(ngModel)]="interviewer"  name="interviewer" placeholder="Enter Interviewer"
+        class="form-control" required="true" readonly type="text">
+        
+        </div>
+      </div>
+      
+      <br>
+    
+    <div class="row">
+    
+    <div class="col-sm-6">
+    <label for="expected_date_of_joining">Interview Date</label>
+    <input type="date" [(ngModel)]="interview_date" name="interview_date" readonly placeholder="Enter Interview Date" class="form-control">
+    </div>
+    <div class="col-sm-6">
+      <label >Customer Name</label>
+      <input id="customer_name" name="candidate_name" placeholder="Enter Candidate Name"
+      class="form-control" required="true" readonly type="text" [(ngModel)]="candidate_name">
+      </div>
+    </div>
+    <br>
+  
+    <div class="row">
+    
+    <br>                 
+    <div class="col-sm-6">
+    <label >Candidate Address</label>
+    <input id="our_ctc" name="candidate_address" placeholder="Enter Candidate Address"
+    class="form-control" required="true" readonly type="text" [(ngModel)]="candidate_address">
+    </div>
+    <br>
+    
+    <div class="col-sm-6">
+    <label >Contact Number:</label>
+    <input id="margin"  [(ngModel)]="contact_number" placeholder="Enter Contact Number" readonly name="contact_number" type="number"  class="form-control">
+    
+    </div>
+    </div> 
+    
+    
+    </div> 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-success" data-dismiss="modal">Close</button>
+         
+          <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" >close</button> -->
+          </div> 
+    </div>
+    </div>
+    </div>
+    </form>
+    </div>

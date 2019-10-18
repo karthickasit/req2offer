@@ -1,0 +1,152 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+  <p style="color: white;margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+ 
+ <div class="app-title">
+  <div>
+    <h1> External Approvals</h1>
+  </div>
+</div>
+
+
+<!-- View Form -->
+<div id="myView" class="modal" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">	
+      <form #editform="ngForm">			
+      <div class="modal-header">
+        <h4 class="modal-title">Respond To Reqs</h4>                                                                                                                                                                                                                     
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div style="margin: 25px" >     
+        <div class="row">
+
+          <div class="col-sm-6">
+            <label >Req Id</label>
+              <input [(ngModel)]="req_id" name="req_id" class="form-control" placeholder="req_id" readonly >
+              <br>
+          </div>
+
+          <div class="col-sm-6">
+            <label >Contact Number</label>
+            <input [(ngModel)]="contact_number" name="contact_number" class="form-control" placeholder="contact_number" readonly>
+            <br>
+          </div>
+          
+          <div class="col-sm-6">
+            <label >Customer Name</label>
+            <input [(ngModel)]="customer_name" name="customer_name" class="form-control" placeholder="customer_name" readonly>
+            <br>
+          </div>
+              
+          <div class="col-sm-6">
+            <label >Employee Name</label>
+            <input [(ngModel)]="employee_name" name="employee_name" class="form-control" placeholder="employee_name" readonly>
+            <br>
+          </div>
+
+          <div class="col-sm-6">
+            <label >Raised On</label>
+            <input [(ngModel)]="request_raised_date" name="request_raised_date" class="form-control" placeholder="request_raised_date" readonly>
+            <br>
+          </div>
+
+          <div class="col-sm-6">
+            <label >Skills</label>
+            <input [(ngModel)]="skills" name="skills" class="form-control" placeholder="skills" readonly>
+            <br>
+          </div>
+          
+          <div class="col-sm-6">
+            <label >Status</label>
+            <input [(ngModel)]="status" name="status" class="form-control" placeholder="status" readonly>
+            <br>
+          </div>
+          
+          <div class="col-sm-6">
+            <label >Years Of Experience</label>
+            <input [(ngModel)]="years_of_experience" name="years_of_experience" class="form-control" placeholder="years_of_experience" readonly>
+            <br>
+          </div>
+          <div class="col-sm-12">
+              <label style="color: black; ">Message</label>
+              <br>
+            <textarea [(ngModel)]="description" #message1="ngModel" name="description" rows = "3" cols = "30" pattern="[^-\s][a-zA-Z0-9-_\s]*" class="form-control" required="true" placeholder="Message">
+            </textarea>
+          </div> 
+          
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal"
+            (click)="update_approval(editform.value,'Approved')" style="background-color: #568034" [disabled]="message1.invalid">Approved</button>
+
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" 
+            style="background-color: #fe0000" (click)="update_approval(editform.value,'Rejected')" [disabled]="message1.invalid">Rejected</button>
+
+            <button type="submit" class="btn btn-primary" data-dismiss="modal"
+            style="background-color: #c55b11" (click)="update_approval(editform.value,'Send Back')" [disabled]="message1.invalid">Send Back</button>
+
+        </div>
+      </div>
+        </form>
+
+      </div>
+    </div>
+ 
+</div>
+
+<div class="container" *ngIf = "!bool">
+  <div class="jumbotron">
+    <h3 class="text-center">No Req has been Raised </h3>
+  </div>    
+</div> 
+
+
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf="bool">
+  <table class="table table-condensed tile " >
+    <thead>
+      <tr>
+        <th>Req Id</th>
+        <th>Contact Number</th>
+        <th>Customer Name</th>
+        <th>Employee Name</th>
+        <th>Raised On</th>
+        <th>Skills</th>
+        <th>Status</th>
+        <th>Years Of Experience</th>
+        
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of externalReqs | paginate: { itemsPerPage: perPage, currentPage: currentpage, totalItems: totalitems };let i = index '>
+        <td>{{item.req_id}}</td>
+        <td>{{item.contact_number}}</td>
+        <td>{{item.customer_name}}</td> 
+        <td>{{item.employee_name}}</td>
+        <td>{{item.request_raised_date}}</td>  
+        <td>{{item.skills}}</td>
+        <!-- <td>{{item.status}}</td> -->
+        <td *ngIf="item.status === 'Approved'">
+            <span class="approved">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Raised'">
+              <span class="raised">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Rejected'">
+              <span class="rejected">{{item.status}}</span>
+        </td>
+        <td *ngIf="item.status === 'Send Back'">
+                  <span class="Send Back">{{item.status}}</span>
+        </td>
+        <td>{{item.years_of_experience}}</td>
+        
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)=view(item)>view</a>
+      <tr>
+      </tr>
+    </tbody>    
+  </table>
+  <pagination-controls (pageChange)="pagechange($event)" class="pull-right"></pagination-controls>
+</div>

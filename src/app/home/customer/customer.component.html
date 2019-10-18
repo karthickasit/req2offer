@@ -1,0 +1,207 @@
+<div class="app-title">
+  <div>
+    <h1> Customers</h1>
+  </div>
+
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal" style="margin-right: 155ex; ">
+  Add Customer
+</button>
+<br><br>
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;">
+  <table class="table table-condensed tile ">
+
+    <thead>
+      <tr>
+        <th>Customer Id</th>
+        <th>Customer Name</th>
+        <th>Location</th>
+        <th>Spoc</th>
+
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of customerlist | paginate: { itemsPerPage: 10, currentPage: p } let i= index'>
+        <td>{{item.customer_id}}</td>
+        <td>{{item.customer_name}}</td>
+        <td>{{item.location}}</td>
+        <td>{{item.spoc}}</td>
+
+        <td (click)='edit(item)'> <img src="assets/pen.png" height="20" width="20" data-toggle="modal"
+            data-target="#myModal" width="20"></td>
+        <td> <img src="assets/delete.png" height="20" width="20" (click)='deleterecord(item.customer_id)'></td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <pagination-controls (pageChange)="p = $event" class="pull-right"></pagination-controls>
+ 
+
+<!-- Edit Form -->
+  <div id="myModal" class="modal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-newsletter">
+      <div class="modal-content">
+        <div class="modal-body text-left">
+
+          <h5>Edit</h5>
+          <button type="button" class="close" data-dismiss="modal" (click)="clear(data.value);data.reset()">&times;</button><br>
+          <form #data="ngForm" (ngSubmit)="update(data)">
+            <label style=" margin-right:27em ">Customer Id:</label>
+            <input [(ngModel)]="customer_id" readonly name="customer_id" type="number" class="form-control"
+              placeholder="customer_id" required="required" value="" #cifld  = "ngModel" [ngClass]="{'is-invalid':cifld.invalid && cifld.touched}">
+              <section *ngIf="cifld.invalid && cifld.touched" class="invalid-feedback">
+                <p *ngIf="cifld.errors.required">*please enter customer Id</p>
+              </section>
+              <br>
+            <label style=" margin-right:25em ">Customer Name:</label>
+            <input [(ngModel)]="customer_name" name="customer_name" type="string" class="form-control"
+              placeholder="customer_name" required="required" value="" #cnafld  = "ngModel" [ngClass]="{'is-invalid':cnafld.invalid && cnafld.touched}"><br>
+              <section *ngIf="cnafld.invalid && cnafld.touched" class="invalid-feedback">
+                <p *ngIf="cnafld.errors.required">*please enter customer Name</p>
+              </section>
+              <label style=" margin-right:29em ">Email Id:</label>
+            <input [(ngModel)]="email_id" name="email_id" type="string" class="form-control" placeholder="Enter email id"
+              required="required" value="" #eifld  = "ngModel" [ngClass]="{'is-invalid':eifld.invalid && eifld.touched}">
+              <section *ngIf="eifld.invalid && eifld.touched" class="invalid-feedback">
+                <p *ngIf="eifld.errors.required">*please enter Email</p>
+              </section>
+              <br>
+            <label style=" margin-right:30em ">Location:</label>
+            <input [(ngModel)]="location" name="location" type="string" class="form-control" placeholder="Enter location"
+              required="required" value="" #lfld  = "ngModel" [ngClass]="{'is-invalid':lfld.invalid && lfld.touched}">
+              <section *ngIf="lfld.invalid && lfld.touched" class="invalid-feedback">
+                <p *ngIf="lfld.errors.required">*please enter Location</p>
+              </section><br>
+            <label style=" margin-right:30em ">Spoc:</label>
+            <input [(ngModel)]="spoc" name="spoc" type="string" class="form-control" placeholder="Enter spoc name"
+              required="required" value="" #sfld  = "ngModel" [ngClass]="{'is-invalid':sfld.invalid && sfld.touched}">
+              <section *ngIf="sfld.invalid && sfld.touched" class="invalid-feedback">
+                <p *ngIf="sfld.errors.required">*please enter spoc</p>
+              </section><br>
+            <label style=" margin-right:30em ">Address:</label>
+            <input [(ngModel)]="address" name="address" type="string" class="form-control" placeholder="Enter address"
+              required="required" value="" #afld  = "ngModel" [ngClass]="{'is-invalid':afld.invalid && afld.touched}">
+              <section *ngIf="afld.invalid && afld.touched" class="invalid-feedback">
+                <p *ngIf="afld.errors.required">*please enter Address </p>
+              </section><br>
+            
+            <div class="form-group"
+            [ngClass]="{
+              'has-danger':con.invalid && (con.dirty || con.touched),
+             'has-success': con.valid && (con.dirty || con.touched)
+        }">
+         <label>Contact Number:</label>
+         <input type="text"
+                class="form-control"
+                name="contact_number"
+                [(ngModel)]="contact_number"
+                required
+                pattern="\+?\d[\d -]{8,12}\d"
+                #con="ngModel">
+         <div class="form-control-feedback"
+              *ngIf="con.errors && (con.dirty || con.touched)">
+           <p *ngIf="con.errors.required">*Number is required</p>
+           <p *ngIf="con.errors.pattern">*provide valid number</p>
+         </div>
+       </div>    <br>
+            <button type="submit" class="btn btn-primary" [disabled] = "data.invalid" data-dismiss="modal" (click)=update(data)>Update</button>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+<!-- Add Customer Form -->
+  <div id="Modal" class="modal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-newsletter">
+      <div class="modal-content">
+        <div class="modal-body text-left">
+
+          <h5>Add Customer</h5>
+          <button type="button" class="close" (click)="clear(data.value);data.reset()" data-dismiss="modal">&times;</button><br>
+          <form #data="ngForm" (ngSubmit)="update(data)">
+            <label style=" margin-right:27em ">Customer Id:</label>
+          
+            
+            <input [(ngModel)]="customer_id"  name="customer_id" type="number" class="form-control"
+              placeholder="customer_id" required="required" value="" #cifld  = "ngModel" [ngClass]="{'is-invalid':cifld.invalid && cifld.touched}">
+              <section *ngIf="cifld.invalid && cifld.touched" class="invalid-feedback">
+                <p *ngIf="cifld.errors.required">*please enter customer Id</p>
+              </section>
+              <br>
+            <label style=" margin-right:25em ">Customer Name:</label>
+            <input [(ngModel)]="customer_name" name="customer_name" type="string" class="form-control"
+              placeholder="customer_name" required="required" value="" #cnafld  = "ngModel" [ngClass]="{'is-invalid':cnafld.invalid && cnafld.touched}">
+              <section *ngIf="cnafld.invalid && cnafld.touched" class="invalid-feedback">
+                <p *ngIf="cnafld.errors.required">*please enter customer Name</p>
+              </section>
+              <br>
+              <label style=" margin-right:29em ">Email Id:</label>
+            <input [(ngModel)]="email_id" name="email_id" type="string" class="form-control" placeholder="Enter email id"
+              required="required" value="" #eifld  = "ngModel" [ngClass]="{'is-invalid':eifld.invalid && eifld.touched}">
+              <section *ngIf="eifld.invalid && eifld.touched" class="invalid-feedback">
+                <p *ngIf="eifld.errors.required">*please enter Email</p>
+              </section>
+              <br>
+            <label style=" margin-right:30em ">Location:</label>
+            <input [(ngModel)]="location" name="location" type="string" class="form-control" placeholder="Enter location"
+              required="required" value="" #lfld  = "ngModel" [ngClass]="{'is-invalid':lfld.invalid && lfld.touched}">
+              <section *ngIf="lfld.invalid && lfld.touched" class="invalid-feedback">
+                <p *ngIf="lfld.errors.required">*please enter Location</p>
+              </section><br>
+            <label style=" margin-right:30em ">Spoc:</label>
+            <input [(ngModel)]="spoc" name="spoc" type="string" class="form-control" placeholder="Enter spoc name"
+              required="required" value="" #sfld  = "ngModel" [ngClass]="{'is-invalid':sfld.invalid && sfld.touched}">
+              <section *ngIf="sfld.invalid && sfld.touched" class="invalid-feedback">
+                <p *ngIf="sfld.errors.required">*please enter spoc</p>
+              </section><br>
+            <label style=" margin-right:30em ">Address:</label>
+            <input [(ngModel)]="address" name="address" type="string" class="form-control" placeholder="Enter address"
+              required="required" value="" #afld  = "ngModel" [ngClass]="{'is-invalid':afld.invalid && afld.touched}">
+              <section *ngIf="afld.invalid && afld.touched" class="invalid-feedback">
+                <p *ngIf="afld.errors.required">*please enter Address </p>
+              </section><br>
+            <!-- <label style=" margin-right:25em ">Contact Number:</label>
+            <input [(ngModel)]="contact_number" name="contact_number" type="text" class="form-control"
+              placeholder="contact_number" required="required" value="" #cnfld  = "ngModel" [ngClass]="{'is-invalid':cnfld.invalid && cnfld.touched}">
+              <section *ngIf="cnfld.invalid && cnfld.touched" class="invalid-feedback">
+                <p *ngIf="cnfld.errors.required">*please enter Contact Number</p>
+              </section>  -->
+              <div class="form-group"
+            [ngClass]="{
+              'has-danger': econ.invalid && (econ.dirty || econ.touched),
+             'has-success': econ.valid && (econ.dirty || econ.touched)
+        }">
+         <label>Contact Number:</label>
+         <input type="text"
+                class="form-control"
+                name="contact_number"
+                [(ngModel)]="contact_number"
+                required
+                pattern="\+?\d[\d -]{8,12}\d"
+                #econ="ngModel">
+         <div class="form-control-feedback"
+              *ngIf="econ.errors && (econ.dirty || econ.touched)">
+           <p *ngIf="econ.errors.required">*Number is required</p>
+           <p *ngIf="econ.errors.pattern">*provide valid number</p>
+         </div>
+       </div>           
+              <br>
+            <button type="submit" class="btn btn-primary" [disabled] = "data.invalid" data-dismiss="modal" (click)=submit(data)>Submit</button>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+

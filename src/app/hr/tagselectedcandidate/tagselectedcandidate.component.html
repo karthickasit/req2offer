@@ -1,0 +1,265 @@
+<ngx-spinner bdOpacity = 0.7 bdColor = "rgba(51,51,51,0.8)" size = "medium" color = "#8eb7cb" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white; margin-top: 40px" > Loading... </p>
+</ngx-spinner>
+<div class="app-title">
+  <div>
+    <h1><i class="fa fa-users" aria-hidden="true"></i> Selected Candidates</h1>
+  </div>
+   
+</div>
+
+
+<div class="jumbotron" *ngIf="!bool">
+  <h1 style="text-align: center">No Candidate has been Selected By Tag Teams</h1>
+</div>
+
+
+<div class="row top table-responsive"style="margin-right: 0px; margin-left: 0px;" *ngIf = "bool">
+  <table class="table table-condensed tile " >
+    <thead>
+      <tr>
+        <th>Req Id</th>
+        <th>Raised By</th>
+        <th>Candidate Name</th>
+        <th>Technology</th>
+        <th>Interviewer</th>
+        <th>Interview Date</th>
+        <th>Experience</th>
+        <th>View</th>
+        <th>Apply</th> 
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of getCandidateList | paginate: { itemsPerPage: 10, currentPage: p }; let i = index'>
+        <td>{{item.req_id}}</td>
+        <td>{{item.raised_by}}</td>
+        <td>{{item.candidate_name}}</td>
+        <td>{{item.technology}}</td>
+        <td>{{item.interviewer}}</td>
+        <td>{{item.interview_date}}</td>
+        <td>{{item.experience}}</td>
+        
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView1" (click)="getCandidateById(item.req_id, item.raised_by)" >View</a></td>
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView" (click)="getReqId(item.req_id)" >Apply</a></td>
+        <td> <img src="assets/delete.png" height="20" width="20" (click)='deleterecord(item.req_id)'></td>
+      
+      <tr>
+        </tr>
+    </tbody>
+    
+</table> 
+</div>
+<div class="pull-right"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+ <!-- The Modal 1 -->
+ <div>
+    <form #formData = "ngForm">
+    
+    <div class="modal" id="myView" >
+    <div class="modal-dialog">
+    <div class="modal-content">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+    <h4 class="modal-title">Candidate Confirmation</h4>
+    <div style="float:right">
+    </div>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    
+    
+    <div style="margin: 25px" >   
+    <div class="row">
+    <div class="col-sm-6">
+    <label >REQ Id</label>
+    <br>
+    <input type="text" [(ngModel)]="req_id" name="req_id"   required="required" placeholder="Enter Req_Id" readonly class="form-control" >    
+    </div>
+    <div class="col-sm-6">
+    <label >Employee ID</label>
+    <br>
+    <input type="number" [(ngModel)]="employee_id" name="employee_id"   required="required" placeholder="Enter Employee ID" class="form-control"> 
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-sm-6">
+    <label >Designation</label>
+    <input id="designation" [(ngModel)]="designation"  name="designation" placeholder="Enter Designation"
+    class="form-control" required="true" type="text">
+    </div>
+
+    <div class="col-sm-6">
+      <label >CTC</label>
+      <input id="ctc"  [(ngModel)]="ctc"  name="ctc" placeholder="Enter CTC"
+      class="form-control" required="true" type="number">
+    </div>
+  </div>
+    
+    
+    <br>
+    <div class="row">
+     
+      
+      <div class="col-sm-6">
+      <label >Date of Joining</label>
+      <input id="date_of_joining" [(ngModel)]="date_of_joining"  name="date_of_joining" placeholder="Enter Date of Joining"
+      class="form-control" required="true" type="date">
+      </div>
+      <div class="col-sm-6">
+        <label >Offer Validity Date</label>
+        <input id="offer_validity_date"  [(ngModel)]="offer_validity_date"  name="offer_validity_date" placeholder="Enter Offer Validity Date"
+        class="form-control" required="true" type="date">
+        
+        </div>
+      </div>
+    </div> 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="saveTAGSelectedCandidate(formData.value);formData.reset()">Submit</button>
+      </div> 
+    </div>
+    </div>
+    </div>
+    </form>
+    </div>
+
+
+    <!-- modal 2 to save TAG selected candidates -->
+    <!-- The Modal -->
+<div>
+    <form>
+    
+    <div class="modal" id="myView1" >
+    <div class="modal-dialog">
+    <div class="modal-content">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+    <h4 class="modal-title">Selected Candidate Details</h4>
+    <div style="float:right">
+    </div>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    
+    <div style="margin: 25px" >   
+    <div class="row">
+    <div class="col-sm-6">
+    <label >REQ Id</label>
+    <br>
+    <input type="text" [(ngModel)]="saveReq_id" name="saveReq_id"   required="required" class="form-control" readonly   >        
+    </div>
+    <div class="col-sm-6">
+    <label >Raised By</label>
+    <br>
+    <input type="text"  [(ngModel)]="saveRaisedBy" name="saveRaisedBy"   required="required" class="form-control" readonly   >        
+    </div>
+    </div>
+    
+    <div class="row">
+    <div class="col-sm-6"><br>
+    <label >Candidate Name</label> 
+    <input id="skill"  [(ngModel)]="candidate_name"  name="candidate_name" placeholder="Enter Candidate Name" #candidateName='ngModel' readonly
+    class="form-control" required="true" type="text" [ngClass]="{'is-invalid':candidateName.invalid && candidateName.touched}">
+    <section *ngIf="candidateName.invalid && candidateName.touched" class="invalid-feedback">
+      <p *ngIf="candidateName.errors.required">*Please Enter Candidate Name</p>
+      </section>
+    </div>
+    
+    <div class="col-sm-6"><br>
+    <label >Candidate Type</label>
+      <input type="text" class="form-control" [(ngModel)]="employee_type" name="employee_type" placeholder="Enter Candidate Type" #candidateType="ngModel" readonly required>
+    </div>
+    </div>
+    
+    <div class="row">
+    <div class="col-sm-6"><br>
+    <label >Technology</label>
+    <input id="technology" [(ngModel)]="technology"  name="technology" placeholder="Enter Technology" #tech='ngModel' readonly
+    class="form-control" required="true" type="text" [ngClass]="{'is-invalid':tech.invalid && tech.touched}">
+    <section *ngIf="tech.invalid && tech.touched" class="invalid-feedback">
+      <p *ngIf="tech.errors.required">*Please Enter Technology</p>
+      </section>
+    </div>
+    <div class="col-sm-6"><br>
+    <label for="expected_date_of_joining">Others</label>
+    <input type="text" [(ngModel)]="others"  name="others" placeholder="Enter Others Technology" required readonly class="form-control" #othersTech='ngModel'
+     [ngClass]="{'is-invalid': othersTech.invalid && othersTech.touched}">
+     <section *ngIf="othersTech.invalid && othersTech.touched" class="invalid-feedback">
+       <p *ngIf="othersTech.errors.required">*Please Enter Others Technology</p>
+     </section>
+  </div>
+    </div>
+  
+    <div class="row">
+    <div class="col-sm-6"><br>
+    <label >Experience</label>
+    <input type="text" [(ngModel)]="experience" name="experience" placeholder="Enter Experience" requried readonly class="form-control">
+    
+  </div>    
+    <div class="col-sm-6"><br>
+    <label >Interviewer</label>
+    <input id="interviewer" name="interviewer" placeholder="Enter Interviewer Name" #interview='ngModel'
+    class="form-control" required type="text" [(ngModel)]="interviewer" readonly [ngClass]="{'is-invalid':interview.invalid && interview.touched}">
+    <section *ngIf="interview.invalid && interview.touched" class="invalid-feedback">
+      <p *ngIf="interview.errors.required">*Please Enter Interviewer Name</p>
+      </section>
+    </div>
+    </div> 
+  
+    <div class="row">
+      <div class="col-sm-6"><br>
+        <label >Interview Date</label>
+        <input id="interview_date" name="interview_date" placeholder="Select Interview Date" #interviewDate='ngModel'
+        class="form-control" required="true" type="date" [(ngModel)]="interview_date" readonly [ngClass]="{'is-invalid': interviewDate.invalid && interviewDate.touched}">
+        <section *ngIf='interviewDate.invalid && interviewDate.touched' class='invalid-feedback'>
+          <p *ngIf="interviewDate.errors.required">*Please Enter interview Date</p>
+        </section>
+      </div>
+      <div class="col-sm-6"><br>
+        <label >Email</label>
+        <input id="email" name="email" placeholder="Enter Email Id"  #Email='ngModel'
+        class="form-control" required="true" type="email" [(ngModel)]="email" readonly [ngClass]="{'is-invalid': Email.invalid && Email.touched}">
+        <section *ngIf='Email.invalid && Email.touched' class='invalid-feedback'>
+          <p *ngIf="Email.errors.required">*Please Enter Valid Email ID</p>
+        </section>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-sm-6"><br>
+        <label >Contact Number</label>
+        <input id="contact_number" name="contact_number" placeholder="Enter Contact Number" #contactNumber='ngModel'
+        class="form-control" required="true" readonly type="number" [(ngModel)]="contact_number" [ngClass]="{'is-invalid': contactNumber.invalid && contactNumber.touched}">
+        <section *ngIf="contactNumber.invalid && contactNumber.touched" class="invalid-feedback">
+          <p *ngIf="contactNumber.errors.required">*Please Enter Contact Number</p>
+        </section>
+      </div>
+      <div class="col-sm-6"><br>
+        <label >Candidate Address</label>
+        <input id="candidate_address" name="candidate_address" placeholder="candidate_address" #candidateAddress='ngModel' readonly
+        class="form-control" required="true" type="text" [(ngModel)]="candidate_address" [ngClass]="{'is-invalid': candidateAddress.invalid && candidateAddress.touched}">
+        <section *ngIf="candidateAddress.invalid && candidateAddress.touched" class="invalid-feedback">
+          <p *ngIf='candidateAddress.errors.required'>*Please Enter Candidate Address</p>
+        </section>
+      </div>
+    </div>
+  
+    <!-- <div class="row" style="margin-top:5px;">
+      <div class="col-sm-6">
+        <span>Resume Upload: </span><input type="file" (change)="onFileSelect($event)">
+      </div>
+    </div> -->
+    
+    
+    </div> 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-success" data-dismiss="modal">Close</button>
+          <!-- <button type="submit" class="btn btn-primary" data-dismiss="modal" >close</button> -->
+          </div> 
+    </div>
+    </div>
+    </div>
+    </form>
+    </div>

@@ -1,0 +1,172 @@
+<div class="app-title">
+
+  <h1> Selected Candidates</h1>
+
+
+</div>
+<div id="myView" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Candidate Info</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div style="margin: 25px">
+        <div class="row">
+
+          <div class="col-sm-6">
+            <label>Req Id</label>
+            <input [(ngModel)]="internal_id" name="internal_id" class="form-control" placeholder="internal_id" readonly>
+            <br>
+          </div>
+          <div class="col-sm-6">
+            <label>Employee Id</label>
+            <br>
+            <input [(ngModel)]="employee_id" name="employee_id" class="form-control"
+              placeholder="employee_id" readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Employee Name</label>
+            <br>
+            <input [(ngModel)]="employee_name" name="employee_name" class="form-control" placeholder="employee_name"
+              readonly>
+          </div>
+
+          <div class="col-sm-6">
+            <label>Email Id</label>
+            <br>
+            <input [(ngModel)]="email_id" name="email_id" class="form-control" placeholder="email_id" readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Contact Number</label>
+            <br>
+            <input [(ngModel)]="contact_number" name="contact_number" class="form-control" placeholder="contact_number"
+              readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Technology</label>
+            <br>
+            <input [(ngModel)]="technology" name="technology" class="form-control" placeholder="technology"
+              readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Designation</label>
+            <br>
+            <input [(ngModel)]="designation" name="designation" class="form-control" placeholder="designation" readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Experience</label>
+            <br>
+            <input [(ngModel)]="experience" name="experience" class="form-control" placeholder="experience" readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Employee Type</label>
+            <br>
+            <input [(ngModel)]="employee_type" name="employee_type" class="form-control" placeholder="employee_type"
+              readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>CTC</label>
+            <br>
+            <input [(ngModel)]="CTC" name="CTC" class="form-control" placeholder="CTC" readonly>
+          </div>
+          <div class="col-sm-6">
+            <label>Resource Location</label>
+            <br>
+            <input [(ngModel)]="resource_location" name="resource_location" class="form-control"
+              placeholder="resource_location" readonly>
+
+          </div>
+          <div class="col-sm-6">
+            <label>Job Location</label>
+            <br>
+            <input [(ngModel)]="job_location" name="job_location" class="form-control" placeholder="job_location"
+              readonly>
+
+          </div>
+
+          <div class="col-sm-6">
+            <label>Joining Date</label>
+            <br>
+            <input [(ngModel)]="joining_date" name="joining_date" class="form-control" placeholder="joining_date"
+              readonly><br>
+          </div>
+          <div class="col-sm-6">
+            <label>Offer Validity Date</label>
+            <br>
+            <input [(ngModel)]="offer_validity_date" name="offer_validity_date" class="form-control"
+              placeholder="offer_validity_date" readonly><br>
+
+          </div>
+          <div class="col-sm-6">
+            <label>Confirmed Date</label>
+            <br>
+            <input [(ngModel)]="confirmed_date" name="confirmed_date" class="form-control"
+              placeholder="confirmed_date" readonly><br>
+
+          </div>
+          <div class="col-sm-6">
+            <label>Others</label>
+            <br>
+            <input [(ngModel)]="status" name="status" class="form-control" placeholder="status" readonly><br>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row top table-responsive" style="margin-right: 0px; margin-left: 0px;" *ngIf = "data">
+  <table class="table table-condensed tile ">
+    <thead>
+      <tr>
+        <th>Req id</th>
+        <th>Employee Id</th>
+        <th>Employee Name</th>
+        <th>Email Id</th>
+        <th>Contact Number</th>
+        <th>Designation</th>
+        <th>Experience</th>
+        <th>Joining Date</th>
+        <th>Confirmed Date</th>
+        <th>View</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of selectedcandidates;let i = index '>
+        <td>{{item.req_id}}</td>
+        <td>{{item.employee_id}}</td>
+        <td>{{item.employee_name}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.contact_number}}</td>
+        <td>{{item.designation}}</td>
+
+        <td>{{item.experience}}</td>
+        <td>{{item.date_of_joining}}</td>
+        <td>{{item.confirmed_date}}</td>
+
+
+
+        <td><a href="" class="trigger-btn" data-toggle="modal" data-target="#myView"
+            (click)=view(selectedcandidates[i])>view</a></td>
+
+
+      <tr>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<div class="container" *ngIf = "em_data">
+    <div class="jumbotron">
+      <h3 class="text-center">No Candidate have been selected </h3>      
+      <!-- <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p> -->
+    </div>    
+  </div> 

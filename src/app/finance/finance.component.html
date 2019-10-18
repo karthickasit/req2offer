@@ -1,0 +1,47 @@
+  
+   <div class="app sidebar-mini rtl">
+    <header class="app-header"><a class="app-header__logo">Req2Offer</a>
+      <a class="app-sidebar__toggle" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+      <ul class="app-nav">
+        <i class="fa fa-home fa-lg" style="margin-top: 20px; color: white"></i>&nbsp;&nbsp;
+        <a routerLink="/fm/dashboard" style="color: white; margin-top: 15px">Dashboard</a>
+  
+        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
+              class="fa fa-user fa-lg"></i></a>
+              <ul class="dropdown-menu settings-menu dropdown-menu-right">    
+                <li><a class="dropdown-item" routerLink="/fm/profile" routerLinkActive="active"><i
+                      class="fa fa-user fa-lg"></i> Profile</a></li>
+
+                      <li><a class="dropdown-item" routerLink="/fm/changepassword"><i class="fa fa-pencil-square-o"></i>Change Password</a></li>
+                <li (click)="logoutAction()"><a class="dropdown-item" href=""><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                </li>
+              </ul>
+        </li>
+      </ul>
+    </header>
+  
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+  
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar"
+          src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+        <div>
+          <p class="app-sidebar__user-name">{{username}}</p>
+          <p class="app-sidebar__user-designation">{{role}}</p>
+        </div>
+      </div>
+      <ul class="app-menu">
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">  Approvals</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" routerLink="/fm/fminternalreqs" routerLinkActive="active">Internal</a></li>
+              <li><a class="treeview-item" routerLink="/fm/fmexternalreqs" routerLinkActive="active">External</a></li>
+            </ul>
+          </li>
+          <li><a class="treeview-item" routerLink="/fm/selectedcandidates" routerLinkActive="active">
+            <i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Selected Candidates</span></a></li>
+      </ul>
+    </aside>
+    <main class="app-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>

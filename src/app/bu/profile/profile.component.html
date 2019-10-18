@@ -1,0 +1,126 @@
+<div class="app-title">
+  <div>
+    <h1> Profile Info</h1>
+  </div>
+
+
+</div>
+<div class="container">
+
+
+  <table class="table table-borderless">
+
+    <tbody *ngFor = 'let info of details'>
+      <tr>
+
+        <td>Name</td>
+        <td>{{info.employee_name}}</td>
+
+      </tr>
+      <tr>
+        <td>Employee Id</td>
+        <td>{{info.employee_id}}</td>
+      </tr>
+      <tr>
+
+        <td>Email</td>
+        <td>{{info.email_id}}</td>
+
+      </tr>
+      <tr>
+
+        <td>Contact Number</td>
+        <td>{{info.contact_number}}</td>
+      </tr>
+      <tr>
+
+        <td>Role Name</td>
+        <td>{{info.role_name}}</td>
+      </tr>
+      <tr>
+
+        <td>Reporting Manger</td>
+        <td>{{info.reporting_manager_name}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editprofile"
+    style="text-align:center; margin-left:70ex;">Edit Profile</button>
+</div>
+
+
+<div>
+  <form #editdata="ngForm" (ngSubmit)="update(editdata)">
+    <div class="modal" id="editprofile"  data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header  -->
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Profile</h4>
+
+            <button type="button" class="close" data-dismiss="modal" (click) = "userinfo()">&times;</button>
+          </div>
+
+
+
+
+
+          <div style="margin: 25px">
+            <div class="row">
+
+
+              <div class="col-sm-6">
+                <label>User Id</label>
+
+                <input id="user_id" [(ngModel)]="user_id" name="employee_id" readonly class="form-control"
+                  required="true" type="text">
+              </div>
+              <div class="col-sm-6">
+                <label>Name</label>
+                <br>
+
+                <input id="name" [(ngModel)]="name" name="employee_name" class="form-control" required="true"
+                  type="text">
+              </div>
+
+              <div class="col-sm-6">
+                <label>Email</label>
+                <br>
+                <input id="email" [(ngModel)]="email" name="email_id" readonly class="form-control" required="true"
+                  type="text">
+              </div>
+
+              <div class="col-sm-6">
+                <label>Contact Number</label>
+                <input id="contact" [(ngModel)]="contact" name="contact_number" placeholder="contact"
+                  class="form-control" required="true" type="text">
+
+              </div>
+
+              <div class="col-sm-6">
+                <label>Role Name</label>
+                <input id="role" [(ngModel)]="role" name="role_id" class="form-control" required="true" type="text"
+                  readonly>
+              </div>
+              <div class="col-sm-6">
+                <label>Reporting Manager</label>
+                <input id="manger" [(ngModel)]="manger" name="reporting_manager" class="form-control" required="true"
+                  type="text" readonly>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal footer  -->
+          <div class="modal-footer">
+
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)=update(editdata)>Submit</button>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>

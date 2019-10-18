@@ -1,0 +1,118 @@
+
+<section class="material-half-bg">
+	<div class="cover"></div>
+</section>
+<section class="login-content">
+	<div class="logo">
+		<h1>ds</h1>
+	</div>
+	<div class="login-box">
+		<form class="login-form"  [formGroup]="OBSLoginForm" (ngSubmit)="LoginAction(OBSLoginForm.value)">
+			<h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
+			<div class="form-group">
+				<label class="control-label">USERNAME</label>
+				<input type="text" class="form-control" placeholder="Username" required="required"  formControlName="UserName">
+			</div>
+			<div class="form-group">
+				<label class="control-label">PASSWORD</label>
+				<input type="password" class="form-control " placeholder="Password" required="required"  formControlName="UserPassword">
+			<span class="fa fa-eye eye1 pull-right" aria-hidden="true"></span>
+			</div>
+			<div class="form-group">
+				<div class="utility">
+					<div class="animated-checkbox">
+						<label>
+							<input type="checkbox"><span class="label-text">Stay Signed in</span>
+						</label>
+					</div>
+					
+					<a href="#myModal" class="trigger-btn" data-toggle="modal" class="forgot-link">Forgot Password ?</a>
+				</div>
+			</div>
+			<div class="form-group btn-container">
+				<button class="btn btn-primary btn-block" [disabled]="OBSLoginForm.invalid"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
+			</div>	
+		  <a href="#" data-toggle="flip" class="pull-right">Register Here</a>
+		</form>
+		<form class="forget-form">
+			<h3 class="login-head"><i class="fa fa-lg fa-fw fa-pencil"></i>Registration Form</h3>
+			<div class="form-group">
+				<label class="control-label">EMAIL</label>
+				<input class="form-control" type="text" placeholder="Email">
+			</div>
+			<div class="form-group">
+				<label class="control-label">PASSWORD</label>
+				<input class="form-control" type="password" placeholder="password">
+			</div>
+			<div class="form-group">
+				<label class="control-label">CONFIRM PASSWORD</label>
+				<input class="form-control" type="password" placeholder="confirm password">
+			</div>
+			<div class="form-group btn-container">
+				<button class="btn btn-primary btn-block">SAVE</button>
+			</div><br>
+			<div class="form-group btn-container">
+				<button class="btn btn-info btn-block">CLEAR</button>
+			</div>
+			
+			<div class="form-group mt-3">
+				<p class="semibold-text mb-0"><a href="#" data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i> Back to Login</a></p>
+			</div>
+		</form>
+	</div>
+	<!--fogot password-->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-newsletter">
+		<div class="modal-content">
+			<form action="/examples/actions/confirmation.php" method="post">
+				
+				<div class="modal-body text-center">
+					<h5>Set password</h5>	
+					<div class="col-md-6 mb-4">
+						<div class="card">
+							<div class="card-body">
+								<!-- Form register -->
+								<form>
+									<h2 class="text-center font-up font-bold deep-orange-text py-4">Sign up</h2>
+									<div class="md-form">
+										<i class="fa fa-user prefix grey-text"></i>
+										<input type="text" id="orangeForm-name3" class="form-control">
+										<label for="orangeForm-name3">Your name</label>
+									</div>
+									<div class="md-form">
+										<i class="fa fa-envelope prefix grey-text"></i>
+										<input type="text" id="orangeForm-email3" class="form-control">
+										<label for="orangeForm-email3">Your email</label>
+									</div>
+									<div class="md-form">
+										<i class="fa fa-lock prefix grey-text"></i>
+										<input type="password" id="orangeForm-pass3" class="form-control">
+										<label for="orangeForm-pass3">Your password</label>
+									</div>
+									<div class="text-center">
+										<button class="btn btn-deep-orange">next<i class="fa fa-angle-double-right pl-2" aria-hidden="true"></i></button>
+									</div>
+								</form>
+								<!-- Form register -->
+							</div>
+						</div>
+					</div>
+					<!-- Grid column -->
+				</div>
+
+
+<style>
+	.forget-form {
+		position: relative;
+		min-width: 350px;
+		min-height: 500px;
+		background-color: #fff;
+		box-shadow: 0px 29px 147.5px 102.5px rgba(0, 0, 0, 0.05), 0px 29px 95px 0px rgba(0, 0, 0, 0.16);
+		-webkit-perspective: 800px;
+		perspective: 800px;
+		transition: all 0.5s ease-in-out;
+	}
+	.login-box{
+		margin-top: -205px;
+	}
+</style>
